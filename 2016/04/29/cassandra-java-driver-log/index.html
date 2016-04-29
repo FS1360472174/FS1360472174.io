@@ -5,15 +5,25 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
+  <meta name="description" content="cassandra java driver log 配置enable/disable trace log
+工程中不导入logback-classic.jar,logback-core.jar
+注意我们同样可以使用slf4j 来解决这个问题http://www.slf4j.org/codes.html#StaticLoggerBinder
+SLF4J: Failed to load class &amp;q">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/index.html">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description">
+<meta property="og:description" content="cassandra java driver log 配置enable/disable trace log
+工程中不导入logback-classic.jar,logback-core.jar
+注意我们同样可以使用slf4j 来解决这个问题http://www.slf4j.org/codes.html#StaticLoggerBinder
+SLF4J: Failed to load class &amp;q">
+<meta property="og:updated_time" content="2016-04-29T09:50:49.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description">
+<meta name="twitter:description" content="cassandra java driver log 配置enable/disable trace log
+工程中不导入logback-classic.jar,logback-core.jar
+注意我们同样可以使用slf4j 来解决这个问题http://www.slf4j.org/codes.html#StaticLoggerBinder
+SLF4J: Failed to load class &amp;q">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -62,9 +72,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-cassandra-java-driver-log" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-cassandra-java-driver-log" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/29/cassandra-java-driver-log/" class="article-date">
   <time datetime="2016-04-29T09:04:27.756Z" itemprop="datePublished">2016-04-29</time>
@@ -144,103 +152,19 @@ set level to TRACE to also log query parameters
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-cassandra-write" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/28/cassandra-write/" class="article-date">
-  <time datetime="2016-04-28T11:10:25.275Z" itemprop="datePublished">2016-04-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#cassandra 写数据以及副本放置策略<br><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
-<ol>
-<li>application 发送请求到server</li>
-<li>根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可</li>
-<li>然后根据插入数据的主键hash value,来将第一份数据写入到对应节点中</li>
-<li>然后根据replicator,write consistency,replication strategy ,来写副本<br>eg.replicator=3,write consistency=2,replication strategy=simple strategy<br>则表示成功写入到2个节点中，application的写操作才算成功。<br>simple strategy 表明副本是放在第一个node 节点环位置的下一个节点</li>
-</ol>
-<p><strong>Note-很重要的一点</strong><br>通过上面描述，发现可以根据hash value 来确定一条数据存放在哪个节点上，然后根据replication的参数设置，我们可以确定数据副本存放在哪个节点上。那么对于read 操作，我们就可以根据条件的hash value 来找到存放数据的第一个节点，然后根据数据副本来找其他replicate 数据。</p>
-<p><strong>上面认识是错误的</strong><br>首先，考虑下如果我们添加node到cluster中，假如数据存放的第一个node hash 受到影响，数据要移除到新加入的node,这个操作很容易实现，那么按照我们上面的认识，其他的副本数据如何处理呢？<br>data的存放的第一个节点变化了，然后再根据replicate stragtegy,已经找不到其他副本了。<br>此外，cassandra 的node是无主机模式，没有主从节点，每份数据都是一样的，但是按照上面的说法，数据的存放的第一个节点重要性又高于其他节点。</p>
-<p>综上，上述认识错误<br><strong>正确的认识</strong><br>cassandra 将数据成功写入后，会有一个map 表，来维护数据存放在哪些节点上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodetool getendpoint keyspace table partitionkey</span><br></pre></td></tr></table></figure>
-<p>这条命令可以查询到数据存放在哪些node上面<br>看了下cassandra的源码，这些数据应该存放在org.apache.cassandra.db:type=StorageService中</p>
-<p><strong>写数据</strong><br><img src="http://img.blog.csdn.net/20160417182913153" alt="这里写图片描述"></p>
-<ol>
-<li>写数据到commit log</li>
-<li>写数据到memtable</li>
-</ol>
-<hr>
-<p> 数据写入到这两个数据结构中，以及replicate 数目达到write consistency数目后，一次写操作就完成了，<br> 写数据是内存操作，所以cassandra 写入速度很快。</p>
-<ol>
-<li>将数据从memtable中冲刷到sstable中<br>sstable中的数据是不可更改的</li>
-</ol>
+  
+    <a href="/2016/04/28/cassandra-write/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinljkbyq0001h0ulg9xznspg" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/27/hello-world/" class="article-date">
-  <time datetime="2016-04-27T14:01:42.830Z" itemprop="datePublished">2016-04-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cinljkbz80002h0ulf8fpz0z1" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         

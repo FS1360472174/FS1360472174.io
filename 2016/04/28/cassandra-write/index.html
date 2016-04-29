@@ -5,30 +5,27 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="application发送数据到server
+  <meta name="description" content="#cassandra 写数据以及副本放置策略application发送数据到server
 
 application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
+根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的req">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="application发送数据到server
+<meta property="og:description" content="#cassandra 写数据以及副本放置策略application发送数据到server
 
 application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
+根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的req">
 <meta property="og:image" content="http://img.blog.csdn.net/20160417175535735">
 <meta property="og:image" content="http://img.blog.csdn.net/20160417182913153">
-<meta property="og:updated_time" content="2016-04-28T11:10:25.402Z">
+<meta property="og:updated_time" content="2016-04-29T09:52:23.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="application发送数据到server
+<meta name="twitter:description" content="#cassandra 写数据以及副本放置策略application发送数据到server
 
 application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
+根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的req">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160417175535735">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -69,7 +66,7 @@ application 发送请求到server
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.webpersonaldeveloper.cn"></form>
@@ -90,7 +87,7 @@ application 发送请求到server
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
+        <p>#cassandra 写数据以及副本放置策略<br><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
 <ol>
 <li>application 发送请求到server</li>
 <li>根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可</li>
@@ -116,7 +113,7 @@ application 发送请求到server
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cink6vx470001jwulh2fz5buf" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinljkbyq0001h0ulg9xznspg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -124,6 +121,15 @@ application 发送请求到server
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/04/29/cassandra-java-driver-log/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2016/04/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -150,7 +156,7 @@ application 发送请求到server
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
     </div>
@@ -160,9 +166,13 @@ application 发送请求到server
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/04/29/cassandra-java-driver-log/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2016/04/28/cassandra-write/">(no title)</a>
