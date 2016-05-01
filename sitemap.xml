@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/01/about/index/</loc>
     
-    <lastmod>2016-05-01T04:31:53.025Z</lastmod>
+    <lastmod>2016-05-01T04:45:41.975Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
     
-    <lastmod>2016-04-29T09:50:49.208Z</lastmod>
+    <lastmod>2016-05-01T04:41:53.683Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
+    
+    <lastmod>2016-05-01T04:31:53.025Z</lastmod>
     
   </url>
   
