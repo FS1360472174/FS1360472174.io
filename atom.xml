@@ -96,9 +96,9 @@ set level to TRACE to also log query parameters
     <link href="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</id>
     <published>2016-04-28T11:10:25.275Z</published>
-    <updated>2016-04-29T09:52:23.256Z</updated>
+    <updated>2016-05-01T04:28:14.368Z</updated>
     
-    <content type="html">&lt;p&gt;#cassandra 写数据以及副本放置策略&lt;br&gt;&lt;strong&gt;application发送数据到server&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160417175535735&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;cassandra-写数据以及副本放置策略&quot;&gt;&lt;a href=&quot;#cassandra-写数据以及副本放置策略&quot; class=&quot;headerlink&quot; title=&quot;#cassandra 写数据以及副本放置策略&quot;&gt;&lt;/a&gt;#cassandra 写数据以及副本放置策略&lt;/h2&gt;&lt;h2 id=&quot;title-Hello-World&quot;&gt;&lt;a href=&quot;#title-Hello-World&quot; class=&quot;headerlink&quot; title=&quot;title: Hello World&quot;&gt;&lt;/a&gt;title: Hello World&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;application发送数据到server&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160417175535735&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;application 发送请求到server&lt;/li&gt;
 &lt;li&gt;根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可&lt;/li&gt;
@@ -124,7 +124,7 @@ set level to TRACE to also log query parameters
     
     <summary type="html">
     
-      &lt;p&gt;#cassandra 写数据以及副本放置策略&lt;br&gt;&lt;strong&gt;application发送数据到server&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160417175535735&quot; alt=&quot;这里写图片描述&quot;&gt;
+      &lt;h2 id=&quot;cassandra-写数据以及副本放置策略&quot;&gt;&lt;a href=&quot;#cassandra-写数据以及副本放置策略&quot; class=&quot;headerlink&quot; title=&quot;#cassandra 写数据以及副本放置策略&quot;&gt;&lt;/a&gt;#cassandra 写数据以及副本放置策略
     
     </summary>
     
