@@ -3,29 +3,32 @@
 <head>
   <meta charset="utf-8">
   
-  <title>web personal developer</title>
+  <title>cassandra 写数据以及副本放置策略 | web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#cassandra 写数据以及副本放置策略title: Hello Worldapplication发送数据到server
+  <meta name="description" content="application发送数据到server
 
 application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的ser">
+根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
+然后">
 <meta property="og:type" content="article">
-<meta property="og:title" content="web personal developer">
+<meta property="og:title" content="cassandra 写数据以及副本放置策略">
 <meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/index.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="#cassandra 写数据以及副本放置策略title: Hello Worldapplication发送数据到server
+<meta property="og:description" content="application发送数据到server
 
 application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的ser">
+根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
+然后">
 <meta property="og:image" content="http://img.blog.csdn.net/20160417175535735">
 <meta property="og:image" content="http://img.blog.csdn.net/20160417182913153">
-<meta property="og:updated_time" content="2016-05-01T04:28:14.368Z">
+<meta property="og:updated_time" content="2016-05-01T04:31:53.025Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="web personal developer">
-<meta name="twitter:description" content="#cassandra 写数据以及副本放置策略title: Hello Worldapplication发送数据到server
+<meta name="twitter:title" content="cassandra 写数据以及副本放置策略">
+<meta name="twitter:description" content="application发送数据到server
 
 application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的ser">
+根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
+然后">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160417175535735">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
@@ -85,9 +88,19 @@ application 发送请求到server
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cassandra 写数据以及副本放置策略
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="cassandra-写数据以及副本放置策略"><a href="#cassandra-写数据以及副本放置策略" class="headerlink" title="#cassandra 写数据以及副本放置策略"></a>#cassandra 写数据以及副本放置策略</h2><h2 id="title-Hello-World"><a href="#title-Hello-World" class="headerlink" title="title: Hello World"></a>title: Hello World</h2><p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
+        <p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
 <ol>
 <li>application 发送请求到server</li>
 <li>根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可</li>
@@ -113,7 +126,7 @@ application 发送请求到server
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cino2uc180002fwuld8kt9qgo" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cino2yt1p0002v0ulwn0is4q5" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -125,7 +138,7 @@ application 发送请求到server
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra-write" data-title="" data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/"></div>
+    <div class="ds-thread" data-thread-key="post-cassandra-write" data-title="cassandra 写数据以及副本放置策略" data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -200,7 +213,7 @@ application 发送请求到server
           </li>
         
           <li>
-            <a href="/2016/04/28/cassandra-write/">(no title)</a>
+            <a href="/2016/04/28/cassandra-write/">cassandra 写数据以及副本放置策略</a>
           </li>
         
           <li>
