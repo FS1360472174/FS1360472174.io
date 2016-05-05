@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-01T04:41:53.683Z</updated>
+  <updated>2016-05-05T09:32:14.845Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -14,6 +14,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git 常用命令</title>
+    <link href="http://www.webpersonaldeveloper.cn/2016/05/05/git/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/05/05/git/</id>
+    <published>2016-05-05T08:10:41.853Z</published>
+    <updated>2016-05-05T09:32:14.845Z</updated>
+    
+    <content type="html">&lt;p&gt;1.apple patch&lt;/p&gt;
+&lt;p&gt;git apply xxx.patch&lt;/p&gt;
+&lt;p&gt;2.clone 指定的branch&lt;/p&gt;
+&lt;p&gt;git clone -b &lt;branch&gt; &lt;remote_repo&gt;&lt;/remote_repo&gt;&lt;/branch&gt;&lt;/p&gt;
+&lt;p&gt;3.查找本地branch&lt;/p&gt;
+&lt;p&gt;git branch &lt;/p&gt;
+&lt;p&gt;4.更换repo远程地址&lt;br&gt; git remote get-url origin //查看远程url&lt;br&gt; git remote set-url origin //设置新的url&lt;br&gt; git push // 提交到新的repo&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.apple patch&lt;/p&gt;
+&lt;p&gt;git apply xxx.patch&lt;/p&gt;
+&lt;p&gt;2.clone 指定的branch&lt;/p&gt;
+&lt;p&gt;git clone -b &lt;branch&gt; &lt;remote_repo&gt;&lt;/remote_repo&gt;&lt;/branch&gt;&lt;/p&gt;
+&lt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>cassandra develope in eclipse 环境构建</title>
+    <link href="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</id>
+    <published>2016-05-05T08:07:24.235Z</published>
+    <updated>2016-05-05T08:55:43.533Z</updated>
+    
+    <content type="html">&lt;p&gt;1.fork cassandra 代码&lt;br&gt;然后clone 到本地（cassandra-trunk 是head 分支)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/FS1360472174/cassandra.git
+cassandra-trunk
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.&lt;code&gt;ant build&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这边有可能会出现字符编码问题，手动清除一下&lt;/p&gt;
+&lt;p&gt;3.生成eclipse工程&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ant generate-eclipse-files
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4.生成jar包&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ant
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;build 目录下会生成apache-cassandra-xxx.jar&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;references&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://wiki.apache.org/cassandra/RunningCassandraInEclipse&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://wiki.apache.org/cassandra/RunningCassandraInEclipse&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.fork cassandra 代码&lt;br&gt;然后clone 到本地（cassandra-trunk 是head 分支)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/FS1360472174/cassandra.git
+cassa
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>cassandra java driver log 配置</title>

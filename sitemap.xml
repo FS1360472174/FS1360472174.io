@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/git/</loc>
+    
+    <lastmod>2016-05-05T09:32:14.845Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
+    
+    <lastmod>2016-05-05T08:55:43.533Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
     
     <lastmod>2016-05-01T04:41:53.683Z</lastmod>
