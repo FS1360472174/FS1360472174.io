@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>cassandra java driver log 配置 | web personal developer</title>
+  <title>web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="enable/disable trace log
-工程中不导入logback-classic.jar,logback-core.jar
-注意我们同样可以使用slf4j 来解决这个问题http://www.slf4j.org/codes.html#StaticLoggerBinder
-SLF4J: Failed to load class &amp;quot;org.slf4j.impl.StaticLog">
+  <meta name="description" content="http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm
+http://xmodulo.com/how-to-install-dummynet-on-centos.html
+redhathttps://access.redhat.com/articles/3078
+unsi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cassandra java driver log 配置">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/index.html">
+<meta property="og:title" content="web personal developer">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/index.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="enable/disable trace log
-工程中不导入logback-classic.jar,logback-core.jar
-注意我们同样可以使用slf4j 来解决这个问题http://www.slf4j.org/codes.html#StaticLoggerBinder
-SLF4J: Failed to load class &amp;quot;org.slf4j.impl.StaticLog">
-<meta property="og:updated_time" content="2016-05-01T04:41:53.683Z">
+<meta property="og:description" content="http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm
+http://xmodulo.com/how-to-install-dummynet-on-centos.html
+redhathttps://access.redhat.com/articles/3078
+unsi">
+<meta property="og:updated_time" content="2016-05-06T10:19:13.796Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cassandra java driver log 配置">
-<meta name="twitter:description" content="enable/disable trace log
-工程中不导入logback-classic.jar,logback-core.jar
-注意我们同样可以使用slf4j 来解决这个问题http://www.slf4j.org/codes.html#StaticLoggerBinder
-SLF4J: Failed to load class &amp;quot;org.slf4j.impl.StaticLog">
+<meta name="twitter:title" content="web personal developer">
+<meta name="twitter:description" content="http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm
+http://xmodulo.com/how-to-install-dummynet-on-centos.html
+redhathttps://access.redhat.com/articles/3078
+unsi">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -83,91 +83,49 @@ var _hmt = _hmt || [];
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-cassandra-java-driver-log" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-How to install dummynet on redhat" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/04/29/cassandra-java-driver-log/" class="article-date">
-  <time datetime="2016-04-29T09:04:27.756Z" itemprop="datePublished">2016-04-29</time>
+    <a href="/2016/05/06/How to install dummynet on redhat/" class="article-date">
+  <time datetime="2016-05-06T01:44:41.792Z" itemprop="datePublished">2016-05-06</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      cassandra java driver log 配置
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>enable/disable trace log</strong></p>
-<p>工程中不导入logback-classic.jar,logback-core.jar</p>
-<p>注意我们同样可以使用slf4j 来解决这个问题<br><a href="http://www.slf4j.org/codes.html#StaticLoggerBinder" target="_blank" rel="external">http://www.slf4j.org/codes.html#StaticLoggerBinder</a></p>
-<pre><code>SLF4J: Failed to load class &quot;org.slf4j.impl.StaticLoggerBinder&quot;.
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-</code></pre><p>但是这样太过粗暴了，有时候我们需要java-driver的调试信息，比如像下面这样有用的信息</p>
-<pre><code>DEBUG [cluster2] [/XXX:9042] Query completed normally, took 264 ms: [1 bound values] select * from TABLE where userid=? limit 5;
-</code></pre><p>但是默认的java-driver 级别是DEBUG,导致console中打印了太多的内容。</p>
-<p>造成了视觉污染，同时很难发现自己需要的。</p>
-<p><strong>配置日志打印级别</strong></p>
-<p>方案1</p>
-<p>在每个insert/query 中设置disable/enable trace</p>
-<pre><code>PreparedStatement ps = session.prepare(&quot;&quot;);
-ps.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM).disableTracing();
-</code></pre><p>方案2</p>
-<p>方案1有效，但是试用场景有限，需要一个可配置的文件进行全局设置<br>以logback 为例。需要logback.xml 来配置，自定义DEBUG/INFO/WARN/WRONG级别</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;configuration&gt;
-&lt;!-- log INFO or higher messages to the console --&gt;
-&lt;appender name=&quot;console&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
-    &lt;encoder&gt;
-        &lt;pattern&gt;%-5p %msg%n&lt;/pattern&gt;
-    &lt;/encoder&gt;
-&lt;/appender&gt;
+        <p><a href="http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm" target="_blank" rel="external">http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm</a></p>
+<p><a href="http://xmodulo.com/how-to-install-dummynet-on-centos.html" target="_blank" rel="external">http://xmodulo.com/how-to-install-dummynet-on-centos.html</a></p>
+<p>redhat<br><a href="https://access.redhat.com/articles/3078" target="_blank" rel="external">https://access.redhat.com/articles/3078</a></p>
+<p>unsigned int hook_arp( unsigned int hooknum, struct sk_buff <em>*skb,<br>                       const struct net_device </em>in,<br>                       const struct net_device <em>out,<br>                       int (</em>okfn)(struct sk_buff *) );</p>
+<p>/usr/src/kernels/linux-3.10.0-327.4.5.el7/include/linux/netfilter.h<br>定义了nf_hook_ops 结构</p>
+<p>struct nf_hook_ops {<br>        struct list_head list;</p>
+<pre><code>/* User fills in from here down. */
+nf_hookfn       *hook;
+struct module   *owner;
+void            *priv;
+u_int8_t        pf;
+unsigned int    hooknum;
+/* Hooks are ordered in ascending priority. */
+int             priority;
 
-&lt;!-- log everything to a rolling file --&gt;
-&lt;appender name=&quot;file&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
-    &lt;file&gt;driver.log&lt;/file&gt;
-    &lt;encoder&gt;
-        &lt;pattern&gt;%-5p [%d{ISO8601}] [%t] %F:%L - %msg%n&lt;/pattern&gt;
-    &lt;/encoder&gt;
-    &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
-        &lt;!-- daily rollover --&gt;
-        &lt;fileNamePattern&gt;driver.%d{yyyy-MM-dd}.log&lt;/fileNamePattern&gt;
-        &lt;!-- keep 30 days&apos; worth of history --&gt;
-        &lt;maxHistory&gt;30&lt;/maxHistory&gt;
-&lt;/rollingPolicy&gt;
-&lt;/appender&gt;
-
-&lt;!-- use AsyncAppender for lower latencies --&gt;
-&lt;appender name=&quot;async&quot; class=&quot;ch.qos.logback.classic.AsyncAppender&quot;&gt;
-    &lt;appender-ref ref=&quot;console&quot; /&gt;
-    &lt;appender-ref ref=&quot;file&quot; /&gt;
-&lt;/appender&gt;
-
-&lt;!--
-Turn on slow query logging by setting this logger to DEBUG; 
-set level to TRACE to also log query parameters 
---&gt;
-&lt;logger name=&quot;com.datastax.driver.core.QueryLogger.SLOW&quot; level=&quot;DEBUG&quot; /&gt;
-
-&lt;root level=&quot;ERROR&quot;&gt;
-    &lt;appender-ref ref=&quot;async&quot; /&gt;
-&lt;/root&gt;
-
-&lt;/configuration&gt;
-</code></pre><p><strong>参考</strong><br><a href="https://datastax.github.io/java-driver/2.1.7/features/logging/" target="_blank" rel="external">https://datastax.github.io/java-driver/2.1.7/features/logging/</a></p>
+/* Reserved for use in the future RHEL versions. Set to zero. */
+unsigned long   __rht_reserved1;
+unsigned long   __rht_reserved2;
+unsigned long   __rht_reserved3;
+unsigned long   __rht_reserved4;
+unsigned long   __rht_reserved5;
+</code></pre><p>};</p>
+<p>typedef unsigned int nf_hookfn(const struct nf_hook_ops <em>ops,<br>                               struct sk_buff </em>skb,<br>                               const struct net_device <em>in,<br>                               const struct net_device </em>out,</p>
+<p>#ifndef <strong>GENKSYMS</strong><br>                               const struct nf_hook_state *state</p>
+<p>#else<br>                               int (<em>okfn)(struct sk_buff </em>)</p>
+<p>#endif<br>                               );</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cinx08tiz0005zsulysz2hhgq" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cinx08til0002zsul9wi3qddb" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -179,7 +137,7 @@ set level to TRACE to also log query parameters
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra-java-driver-log" data-title="cassandra java driver log 配置" data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/"></div>
+    <div class="ds-thread" data-thread-key="post-How to install dummynet on redhat" data-title="" data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -201,19 +159,10 @@ set level to TRACE to also log query parameters
     
 <nav id="article-nav">
   
-    <a href="/2016/05/05/cassandra-buildin-eclipse/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          cassandra develope in eclipse 环境构建
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/04/28/cassandra-write/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/05/05/git/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">cassandra 写数据以及副本放置策略</div>
+      <div class="article-nav-title">git 常用命令</div>
     </a>
   
 </nav>

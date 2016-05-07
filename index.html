@@ -25,13 +25,24 @@
   
   <link rel="stylesheet" href="/css/style.css">
   
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=55880411" charset="UTF-8"></script>
+
 </head>
 
 <body>
   <div id="container">
     <div id="wrap">
-      <header id="header">
+      <script type="text/javascript" src="http://tajs.qq.com/stats?sId=55880411" charset="UTF-8"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?58ec1dc8b5972b468eb3098d1415a338";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<header id="header">
   <div id="banner"></div>
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
@@ -53,7 +64,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.webpersonaldeveloper.cn"></form>
@@ -63,6 +74,83 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-How to install dummynet on redhat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/06/How to install dummynet on redhat/" class="article-date">
+  <time datetime="2016-05-06T01:44:41.792Z" itemprop="datePublished">2016-05-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm" target="_blank" rel="external">http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm</a></p>
+<p><a href="http://xmodulo.com/how-to-install-dummynet-on-centos.html" target="_blank" rel="external">http://xmodulo.com/how-to-install-dummynet-on-centos.html</a></p>
+<p>redhat<br><a href="https://access.redhat.com/articles/3078" target="_blank" rel="external">https://access.redhat.com/articles/3078</a></p>
+<p>unsigned int hook_arp( unsigned int hooknum, struct sk_buff <em>*skb,<br>                       const struct net_device </em>in,<br>                       const struct net_device <em>out,<br>                       int (</em>okfn)(struct sk_buff *) );</p>
+<p>/usr/src/kernels/linux-3.10.0-327.4.5.el7/include/linux/netfilter.h<br>定义了nf_hook_ops 结构</p>
+<p>struct nf_hook_ops {<br>        struct list_head list;</p>
+<pre><code>/* User fills in from here down. */
+nf_hookfn       *hook;
+struct module   *owner;
+void            *priv;
+u_int8_t        pf;
+unsigned int    hooknum;
+/* Hooks are ordered in ascending priority. */
+int             priority;
+
+/* Reserved for use in the future RHEL versions. Set to zero. */
+unsigned long   __rht_reserved1;
+unsigned long   __rht_reserved2;
+unsigned long   __rht_reserved3;
+unsigned long   __rht_reserved4;
+unsigned long   __rht_reserved5;
+</code></pre><p>};</p>
+<p>typedef unsigned int nf_hookfn(const struct nf_hook_ops <em>ops,<br>                               struct sk_buff </em>skb,<br>                               const struct net_device <em>in,<br>                               const struct net_device </em>out,</p>
+<p>#ifndef <strong>GENKSYMS</strong><br>                               const struct nf_hook_state *state</p>
+<p>#else<br>                               int (<em>okfn)(struct sk_buff </em>)</p>
+<p>#endif<br>                               );</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cinx08til0002zsul9wi3qddb" class="article-share-link">Share</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-How to install dummynet on redhat" data-title="" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -97,7 +185,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cinu608u40002fcul3j9mlsl5" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cinx08tio0003zsulkfzp6xfn" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -170,7 +258,7 @@ cassandra-trunk
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cinu608tq0000fculncphw77u" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cinx08ti90000zsulthr86rnn" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -289,7 +377,7 @@ set level to TRACE to also log query parameters
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cinu608uq0004fculluc4i5ur" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cinx08tiz0005zsulysz2hhgq" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -372,7 +460,7 @@ set level to TRACE to also log query parameters
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinu608u70003fculz7cc8xwz" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinx08tiq0004zsul6zc4i2an" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -442,7 +530,7 @@ set level to TRACE to also log query parameters
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cinu608u00001fcul78wuumxx" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cinx08tii0001zsulxg9mse7t" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -492,7 +580,7 @@ set level to TRACE to also log query parameters
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
     </div>
@@ -502,9 +590,13 @@ set level to TRACE to also log query parameters
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/06/How to install dummynet on redhat/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2016/05/05/git/">git 常用命令</a>
@@ -520,10 +612,6 @@ set level to TRACE to also log query parameters
         
           <li>
             <a href="/2016/04/28/cassandra-write/">cassandra 写数据以及副本放置策略</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/27/hello-world/">Hello World</a>
           </li>
         
       </ul>

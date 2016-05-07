@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-05T09:32:14.845Z</updated>
+  <updated>2016-05-06T10:19:13.796Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/</id>
+    <published>2016-05-06T01:44:41.792Z</published>
+    <updated>2016-05-06T10:19:13.796Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;redhat&lt;br&gt;&lt;a href=&quot;https://access.redhat.com/articles/3078&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://access.redhat.com/articles/3078&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;unsigned int hook_arp( unsigned int hooknum, struct sk_buff &lt;em&gt;*skb,&lt;br&gt;                       const struct net_device &lt;/em&gt;in,&lt;br&gt;                       const struct net_device &lt;em&gt;out,&lt;br&gt;                       int (&lt;/em&gt;okfn)(struct sk_buff *) );&lt;/p&gt;
+&lt;p&gt;/usr/src/kernels/linux-3.10.0-327.4.5.el7/include/linux/netfilter.h&lt;br&gt;定义了nf_hook_ops 结构&lt;/p&gt;
+&lt;p&gt;struct nf_hook_ops {&lt;br&gt;        struct list_head list;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/* User fills in from here down. */
+nf_hookfn       *hook;
+struct module   *owner;
+void            *priv;
+u_int8_t        pf;
+unsigned int    hooknum;
+/* Hooks are ordered in ascending priority. */
+int             priority;
+
+/* Reserved for use in the future RHEL versions. Set to zero. */
+unsigned long   __rht_reserved1;
+unsigned long   __rht_reserved2;
+unsigned long   __rht_reserved3;
+unsigned long   __rht_reserved4;
+unsigned long   __rht_reserved5;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;};&lt;/p&gt;
+&lt;p&gt;typedef unsigned int nf_hookfn(const struct nf_hook_ops &lt;em&gt;ops,&lt;br&gt;                               struct sk_buff &lt;/em&gt;skb,&lt;br&gt;                               const struct net_device &lt;em&gt;in,&lt;br&gt;                               const struct net_device &lt;/em&gt;out,&lt;/p&gt;
+&lt;p&gt;#ifndef &lt;strong&gt;GENKSYMS&lt;/strong&gt;&lt;br&gt;                               const struct nf_hook_state *state&lt;/p&gt;
+&lt;p&gt;#else&lt;br&gt;                               int (&lt;em&gt;okfn)(struct sk_buff &lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;#endif&lt;br&gt;                               );&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>git 常用命令</title>
