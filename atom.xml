@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-07T10:45:11.126Z</updated>
+  <updated>2016-05-07T14:03:36.480Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -16,44 +16,102 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>redhat7 上安装dummynet</title>
     <link href="http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/</id>
     <published>2016-05-06T01:44:41.792Z</published>
-    <updated>2016-05-07T10:45:11.126Z</updated>
+    <updated>2016-05-07T14:03:36.480Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;a href=&quot;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.rpmfind.net/linux/RPM/centos/updates/7.2.1511/x86_64/Packages/kernel-3.10.0-327.13.1.el7.x86_64.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.rpmfind.net/linux/RPM/centos/updates/7.2.1511/x86_64/Packages/kernel-3.10.0-327.13.1.el7.x86_64.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;redhat&lt;br&gt;&lt;a href=&quot;https://access.redhat.com/articles/3078&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://access.redhat.com/articles/3078&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;unsigned int hook_arp( unsigned int hooknum, struct sk_buff &lt;em&gt;*skb,&lt;br&gt;                       const struct net_device &lt;/em&gt;in,&lt;br&gt;                       const struct net_device &lt;em&gt;out,&lt;br&gt;                       int (&lt;/em&gt;okfn)(struct sk_buff *) );&lt;/p&gt;
-&lt;p&gt;/usr/src/kernels/linux-3.10.0-327.4.5.el7/include/linux/netfilter.h&lt;br&gt;定义了nf_hook_ops 结构&lt;/p&gt;
-&lt;p&gt;struct nf_hook_ops {&lt;br&gt;        struct list_head list;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;/* User fills in from here down. */
-nf_hookfn       *hook;
-struct module   *owner;
-void            *priv;
-u_int8_t        pf;
-unsigned int    hooknum;
-/* Hooks are ordered in ascending priority. */
-int             priority;
+    <content type="html">&lt;p&gt;更多请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;摘要：&quot;&gt;&lt;a href=&quot;#摘要：&quot; class=&quot;headerlink&quot; title=&quot;摘要：&quot;&gt;&lt;/a&gt;摘要：&lt;/h1&gt;&lt;p&gt;在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。&lt;br&gt;linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数&lt;/p&gt;
+&lt;h1 id=&quot;提醒&quot;&gt;&lt;a href=&quot;#提醒&quot; class=&quot;headerlink&quot; title=&quot;提醒&quot;&gt;&lt;/a&gt;提醒&lt;/h1&gt;&lt;p&gt;如果你要部署在Redhat6,CentOS6等内核版本比较低的平台，不必参考下面的部署流程。&lt;br&gt;这篇文章就可以满足的你要求&lt;br&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果遇到问题，再返回这篇进一步学习&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;dummynet简介&quot;&gt;&lt;a href=&quot;#dummynet简介&quot; class=&quot;headerlink&quot; title=&quot;dummynet简介&quot;&gt;&lt;/a&gt;dummynet简介&lt;/h1&gt;&lt;p&gt;dummynet 是linux下面(现在也可以部署在window下)一款开源的网络带宽控制工具，&lt;br&gt;在网站上线前，可能需要测试带宽对站点的影响。而dummynet就是为此而生。&lt;/p&gt;
+&lt;h1 id=&quot;部署流程&quot;&gt;&lt;a href=&quot;#部署流程&quot; class=&quot;headerlink&quot; title=&quot;部署流程&quot;&gt;&lt;/a&gt;部署流程&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;准备内核版本&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;参看系统内核版本&lt;/p&gt;
+&lt;p&gt;   &lt;code&gt;uname -r&lt;/code&gt; &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们需要将IPFW编译成内核模块，请确保&lt;br&gt;IPFW用到的内核源码版本同你LINUX系统运行内核版本一致。&lt;/p&gt;
+&lt;p&gt;我的linux系统版本redhat7.2,内核版本3.10.0-327.13.1.el7.x86_64&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;下载此版本的内核源码包&lt;br&gt;kernel-3.10.0-327.13.1.el7.src.rpm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;http://vault.centos.org/7.2.1511/updates/Source/SPackages/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://vault.centos.org/7.2.1511/updates/Source/SPackages/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;使用wget或者直接下载放在/usr/src/kernels 目录&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;解压源码包&lt;/p&gt;
+&lt;p&gt;`&lt;/p&gt;
+&lt;p&gt;  rpm2cpio kernel-3.10.0-327.13.1.el7.src.rpm |cpio -div &lt;/p&gt;
+&lt;p&gt;  tar xvf  linux-3.10.0-327.13.1.el7.tar.xz&lt;br&gt;  cd 3.10.0-327.13.1.el7.x86_64&lt;br&gt;  make oldconfig&lt;br&gt;  make prepare&lt;br&gt;  make scripts&lt;br&gt;`&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;编译dummynet&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/FS1360472174/dummynet.git
+cd dummynet
+make KERNELPATH=/usr/src/kernels/3.10.0-327.13.1.el7.x86_64
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;加载ipfw 模块&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd kipfw-mod
+insmod ipfw-mod.ko
+cd dummy/ipfw
+cp ipfw /sbin
+chmod 700 /sbin/ipfw
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;验证ipfw&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ipfw add pipe 2 in proto tcp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;optional,将ipfw 设置为boot启动&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cp ipfw_mod.ko /lib/modules/3.10.0-327.13.1.el7.x86_64/kernel/net/netfilter
+depmod
+sh -c &amp;apos;echo modprobe ipfw_mod &amp;gt;&amp;gt; /etc/rc.modules&amp;apos;
+chmod +x /etc/rc.modules
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;#问题分析 #&lt;br&gt;1.insmod: ERROR: could not insert module ipfw_mod.ko: Invalid module format&lt;/p&gt;
+&lt;p&gt;解决：&lt;/p&gt;
+&lt;p&gt;modinfo ipfw_mod.ko 看下vermagic版本是不是uname -r的版本。&lt;br&gt;然后重新编译ipfw 模块&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;make KERNELPATH=/usr/src/kernels/3.10.0-327.13.1.el7.x86_64
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.ipfw: getsockopt(IP_FW_ADD): Protocol not available&lt;/p&gt;
+&lt;p&gt;解决：&lt;/p&gt;
+&lt;p&gt;ipfw 模块未加载到内核&lt;br&gt;可以&lt;code&gt;lsmod |grep ipfw&lt;/code&gt;看下&lt;br&gt;需要重述上述步骤，将ipfw编译进内核模块&lt;/p&gt;
+&lt;p&gt;3.编译模块时报错&lt;br&gt;类似于ipfw2_mod.c line 848 nf_hook_ops.hk struct have erors.&lt;/p&gt;
+&lt;p&gt;解决：&lt;br&gt;Hook structure 在各个版本的linux中定义不一样，所以如果是从dummynet 站点中下载的&lt;br&gt;老的dummynet 包或者从这个download下来的包可能就有错误。&lt;br&gt;&lt;a href=&quot;https://github.com/luigirizzo/dummynet&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/luigirizzo/dummynet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;建议你查看下当前所用系统的hook 结构&lt;/p&gt;
+&lt;p&gt;/usr/src/kernels/linux-3.10.0-327.4.5.el7/include/linux/netfilter.h&lt;br&gt;定义了nf_hook_ops，nf_hookfn的结构&lt;br&gt;    struct nf_hook_ops {&lt;br&gt;        struct list_head list;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    /* User fills in from here down. */
+    nf_hookfn       *hook;
+    struct module   *owner;
+    void            *priv;
+    u_int8_t        pf;
+    unsigned int    hooknum;
+    /* Hooks are ordered in ascending priority. */
+    int             priority;
 
-/* Reserved for use in the future RHEL versions. Set to zero. */
-unsigned long   __rht_reserved1;
-unsigned long   __rht_reserved2;
-unsigned long   __rht_reserved3;
-unsigned long   __rht_reserved4;
-unsigned long   __rht_reserved5;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;};&lt;/p&gt;
-&lt;p&gt;typedef unsigned int nf_hookfn(const struct nf_hook_ops &lt;em&gt;ops,&lt;br&gt;                               struct sk_buff &lt;/em&gt;skb,&lt;br&gt;                               const struct net_device &lt;em&gt;in,&lt;br&gt;                               const struct net_device &lt;/em&gt;out,&lt;/p&gt;
-&lt;p&gt;#ifndef &lt;strong&gt;GENKSYMS&lt;/strong&gt;&lt;br&gt;                               const struct nf_hook_state *state&lt;/p&gt;
-&lt;p&gt;#else&lt;br&gt;                               int (&lt;em&gt;okfn)(struct sk_buff &lt;/em&gt;)&lt;/p&gt;
-&lt;p&gt;#endif&lt;br&gt;                               );&lt;/p&gt;
+    /* Reserved for use in the future RHEL versions. Set to zero. */
+    unsigned long   __rht_reserved1;
+    unsigned long   __rht_reserved2;
+    unsigned long   __rht_reserved3;
+    unsigned long   __rht_reserved4;
+    unsigned long   __rht_reserved5;
+};
+
+typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
+   struct sk_buff *skb,
+   const struct net_device *in,
+   const struct net_device *out,
+#ifndef __GENKSYMS__
+   const struct nf_hook_state *state
+#else
+   int (*okfn)(struct sk_buff *)
+#endif
+   );
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;参考：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://www.rpmfind.net/linux/RPM/centos/updates/7.2.1511/x86_64/Packages/kernel-3.10.0-327.13.1.el7.x86_64.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.rpmfind.net/linux/RPM/centos/updates/7.2.1511/x86_64/Packages/kernel-3.10.0-327.13.1.el7.x86_64.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://access.redhat.com/articles/3078&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://access.redhat.com/articles/3078&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http
+      &lt;p&gt;更多请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;摘要：&quot;&gt;&lt;a href=&quot;#摘要：&quot; class=&quot;headerlink&quot; title=&quot;摘要：&quot;&gt;&lt;/a&gt;摘要：&lt;/h1&gt;&lt;p&gt;在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。&lt;br&gt;linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数&lt;/p&gt;
+&lt;h1 id=&quot;提醒&quot;&gt;&lt;a href=&quot;#提醒&quot; class=&quot;headerlink&quot; title=&quot;提醒&quot;&gt;&lt;/a&gt;提醒&lt;/h1&gt;&lt;p&gt;如果你要部署在Redhat6,CentOS6等内核版本比较低的平台，不必参考下面的部署流程。&lt;br&gt;这篇文章就可以满足的你要求&lt;br&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果遇到问题，再返回这篇进一步学习&lt;br&gt;
     
     </summary>
     

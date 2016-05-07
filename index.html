@@ -85,43 +85,34 @@ var _hmt = _hmt || [];
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm" target="_blank" rel="external">http://vault.centos.org/7.2.1511/updates/Source/SPackages/kernel-3.10.0-327.4.5.el7.src.rpm</a></p>
-<p><a href="https://www.rpmfind.net/linux/RPM/centos/updates/7.2.1511/x86_64/Packages/kernel-3.10.0-327.13.1.el7.x86_64.html" target="_blank" rel="external">https://www.rpmfind.net/linux/RPM/centos/updates/7.2.1511/x86_64/Packages/kernel-3.10.0-327.13.1.el7.x86_64.html</a></p>
-<p><a href="http://xmodulo.com/how-to-install-dummynet-on-centos.html" target="_blank" rel="external">http://xmodulo.com/how-to-install-dummynet-on-centos.html</a></p>
-<p>redhat<br><a href="https://access.redhat.com/articles/3078" target="_blank" rel="external">https://access.redhat.com/articles/3078</a></p>
-<p>unsigned int hook_arp( unsigned int hooknum, struct sk_buff <em>*skb,<br>                       const struct net_device </em>in,<br>                       const struct net_device <em>out,<br>                       int (</em>okfn)(struct sk_buff *) );</p>
-<p>/usr/src/kernels/linux-3.10.0-327.4.5.el7/include/linux/netfilter.h<br>定义了nf_hook_ops 结构</p>
-<p>struct nf_hook_ops {<br>        struct list_head list;</p>
-<pre><code>/* User fills in from here down. */
-nf_hookfn       *hook;
-struct module   *owner;
-void            *priv;
-u_int8_t        pf;
-unsigned int    hooknum;
-/* Hooks are ordered in ascending priority. */
-int             priority;
-
-/* Reserved for use in the future RHEL versions. Set to zero. */
-unsigned long   __rht_reserved1;
-unsigned long   __rht_reserved2;
-unsigned long   __rht_reserved3;
-unsigned long   __rht_reserved4;
-unsigned long   __rht_reserved5;
-</code></pre><p>};</p>
-<p>typedef unsigned int nf_hookfn(const struct nf_hook_ops <em>ops,<br>                               struct sk_buff </em>skb,<br>                               const struct net_device <em>in,<br>                               const struct net_device </em>out,</p>
-<p>#ifndef <strong>GENKSYMS</strong><br>                               const struct nf_hook_state *state</p>
-<p>#else<br>                               int (<em>okfn)(struct sk_buff </em>)</p>
-<p>#endif<br>                               );</p>
-
+        <p>更多请访问 <a href="http://www.webpersonaldeveloper.cn">http://www.webpersonaldeveloper.cn</a></p>
+<h1 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h1><p>在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。<br>linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数</p>
+<h1 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h1><p>如果你要部署在Redhat6,CentOS6等内核版本比较低的平台，不必参考下面的部署流程。<br>这篇文章就可以满足的你要求<br><a href="http://xmodulo.com/how-to-install-dummynet-on-centos.html">http://xmodulo.com/how-to-install-dummynet-on-centos.html</a></p>
+<p>如果遇到问题，再返回这篇进一步学习<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/06/How to install dummynet on redhat/#more">Read More</a>
+          </p>
+        
       
     </div>
 	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>0次
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cinx224i600010suln2m1ka63" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cinx82fz700051suli3fqmyvw" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -133,7 +124,7 @@ unsigned long   __rht_reserved5;
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-How to install dummynet on redhat" data-title="" data-url="undefined"></div>
+    <div class="ds-thread" data-thread-key="post-How to install dummynet on redhat" data-title="redhat7 上安装dummynet" data-url="undefined"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -190,10 +181,10 @@ unsigned long   __rht_reserved5;
       
     </div>
 	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>0次
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cinx224ie00030sulfvlzcy2h" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cinx82fyy00031sulg1cl6j1h" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -266,10 +257,10 @@ cassandra-trunk
       
     </div>
 	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>0次
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cinx224hx00000suljy3vinmm" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cinx82fyk00001sul32fhcozf" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -388,10 +379,10 @@ set level to TRACE to also log query parameters
       
     </div>
 	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>0次
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cinx224ih00050sul4qi2yy7h" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cinx82fyt00011suleik0reo6" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -474,10 +465,10 @@ set level to TRACE to also log query parameters
       
     </div>
 	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>0次
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinx224ib00020sula6zchcog" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinx82fz400041sulvj2w5mdk" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -547,10 +538,10 @@ set level to TRACE to also log query parameters
       
     </div>
 	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>0次
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cinx224if00040sul1yk7pnoq" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cinx82fyw00021sulgzismc5n" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -615,7 +606,7 @@ set level to TRACE to also log query parameters
       <ul>
         
           <li>
-            <a href="/2016/05/06/How to install dummynet on redhat/">(no title)</a>
+            <a href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
           </li>
         
           <li>
