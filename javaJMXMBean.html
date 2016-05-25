@@ -3,33 +3,41 @@
 <head>
   <meta charset="utf-8">
   
-  <title>cassandra 写数据以及副本放置策略 | web personal developer</title>
+  <title>java MBean | web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="application发送数据到server
-
-application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
-<meta property="og:type" content="article">
-<meta property="og:title" content="cassandra 写数据以及副本放置策略">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/index.html">
+  <meta name="description" content="1.define an interface 
+public interface LatencyMBean {
+   public int getCacheSize();  
+   public void setCacheSize(int size);
+}
+2.define a class
+public class Latency  implements LatencyMBean{
+    publ">
+<meta property="og:type" content="website">
+<meta property="og:title" content="java MBean">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/javaJMXMBean.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="application发送数据到server
-
-application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
-<meta property="og:image" content="http://img.blog.csdn.net/20160417175535735">
-<meta property="og:image" content="http://img.blog.csdn.net/20160417182913153">
-<meta property="og:updated_time" content="2016-05-01T04:31:53.025Z">
+<meta property="og:description" content="1.define an interface 
+public interface LatencyMBean {
+   public int getCacheSize();  
+   public void setCacheSize(int size);
+}
+2.define a class
+public class Latency  implements LatencyMBean{
+    publ">
+<meta property="og:image" content="http://www.webpersonaldeveloper.cn/E:\github\blog\source\_posts\images\MBean.png">
+<meta property="og:updated_time" content="2016-05-20T07:03:35.516Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cassandra 写数据以及副本放置策略">
-<meta name="twitter:description" content="application发送数据到server
-
-application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160417175535735">
+<meta name="twitter:title" content="java MBean">
+<meta name="twitter:description" content="1.define an interface 
+public interface LatencyMBean {
+   public int getCacheSize();  
+   public void setCacheSize(int size);
+}
+2.define a class
+public class Latency  implements LatencyMBean{
+    publ">
+<meta name="twitter:image" content="http://www.webpersonaldeveloper.cn/E:\github\blog\source\_posts\images\MBean.png">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -89,10 +97,10 @@ var _hmt = _hmt || [];
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-cassandra-write" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/04/28/cassandra-write/" class="article-date">
-  <time datetime="2016-04-28T11:10:25.275Z" itemprop="datePublished">2016-04-28</time>
+    <a href="/javaJMXMBean.html" class="article-date">
+  <time datetime="2016-05-25T11:31:21.230Z" itemprop="datePublished">2016-05-25</time>
 </a>
     
   </div>
@@ -103,7 +111,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      cassandra 写数据以及副本放置策略
+      java MBean
     </h1>
   
 
@@ -111,28 +119,55 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
-<ol>
-<li>application 发送请求到server</li>
-<li>根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可</li>
-<li>然后根据插入数据的主键hash value,来将第一份数据写入到对应节点中</li>
-<li>然后根据replicator,write consistency,replication strategy ,来写副本<br>eg.replicator=3,write consistency=2,replication strategy=simple strategy<br>则表示成功写入到2个节点中，application的写操作才算成功。<br>simple strategy 表明副本是放在第一个node 节点环位置的下一个节点</li>
-</ol>
-<p><strong>Note-很重要的一点</strong><br>通过上面描述，发现可以根据hash value 来确定一条数据存放在哪个节点上，然后根据replication的参数设置，我们可以确定数据副本存放在哪个节点上。那么对于read 操作，我们就可以根据条件的hash value 来找到存放数据的第一个节点，然后根据数据副本来找其他replicate 数据。</p>
-<p><strong>上面认识是错误的</strong><br>首先，考虑下如果我们添加node到cluster中，假如数据存放的第一个node hash 受到影响，数据要移除到新加入的node,这个操作很容易实现，那么按照我们上面的认识，其他的副本数据如何处理呢？<br>data的存放的第一个节点变化了，然后再根据replicate stragtegy,已经找不到其他副本了。<br>此外，cassandra 的node是无主机模式，没有主从节点，每份数据都是一样的，但是按照上面的说法，数据的存放的第一个节点重要性又高于其他节点。</p>
-<p>综上，上述认识错误<br><strong>正确的认识</strong><br>cassandra 将数据成功写入后，会有一个map 表，来维护数据存放在哪些节点上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodetool getendpoint keyspace table partitionkey</span><br></pre></td></tr></table></figure>
-<p>这条命令可以查询到数据存放在哪些node上面<br>看了下cassandra的源码，这些数据应该存放在org.apache.cassandra.db:type=StorageService中</p>
-<p><strong>写数据</strong><br><img src="http://img.blog.csdn.net/20160417182913153" alt="这里写图片描述"></p>
-<ol>
-<li>写数据到commit log</li>
-<li>写数据到memtable</li>
-</ol>
-<hr>
-<p> 数据写入到这两个数据结构中，以及replicate 数目达到write consistency数目后，一次写操作就完成了，<br> 写数据是内存操作，所以cassandra 写入速度很快。</p>
-<ol>
-<li>将数据从memtable中冲刷到sstable中<br>sstable中的数据是不可更改的</li>
-</ol>
+        <p>1.define an interface </p>
+<pre><code>public interface LatencyMBean {
+   public int getCacheSize();  
+   public void setCacheSize(int size);
+}
+</code></pre><p>2.define a class</p>
+<pre><code>public class Latency  implements LatencyMBean{
+    public final Timer crossDCLatency;
+    private static final MetricNameFactory factory = new DefaultNameFactory(&quot;Messaging&quot;);
+    public Latency() {
+        crossDCLatency = Metrics.timer(factory.createMetricName(&quot;CrossNodeLatency&quot;));
+    }
+    @Override
+    public int getCacheSize() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    @Override
+    public void setCacheSize(int size) {
+        // TODO Auto-generated method stub
+
+    }
+
+}
+</code></pre><p>3.register MBean</p>
+<pre><code>public class Agent {
+    public static void main(String[] args)
+            throws MalformedObjectNameException, NullPointerException, InstanceAlreadyExistsException,
+            MBeanRegistrationException, NotCompliantMBeanException, InterruptedException {
+        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name = new ObjectName(&quot;com.fs.metrics:type=CrossDCLatency&quot;); 
+        Latency mbean = new Latency();
+        server.registerMBean(mbean, name);
+
+        System.out.println(&quot;waiting here for remote management...&quot;);
+        Thread.sleep(Long.MAX_VALUE);
+    }
+}
+</code></pre><p>4.verify</p>
+<p><img src="E:\github\blog\source\_posts\images\MBean.png" alt="two MBean"></p>
+<p>com.fs.metrics &amp;&amp; org.apache.cassandra.metrics.Messaging.CrossNodeLatency</p>
+<p>5.cassandra latency 更新</p>
+<pre><code>crossDCLatency.update(5, TimeUnit.MILLISECONDS);
+</code></pre><p>这个值更新，是如何影响attribute Mean,Min,Max 等值的</p>
+<p>6.mean 等值的计算</p>
+<p>final AtomicLongArray buckets<br>private final long[] bucketOffsets</p>
+<p>AtomicLongArray 长整型数组原子操作<br>将值坐标为[[1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 17, 20, 24, 29, 35, 42, 50, 60, 72, 86, 103, 124, 149, 179]<br>这样<br>先判断n在这里面，如果在相应位置+1<br>如果n不在，使用Array.binarySearch()找到n离 序列中最近的一个最大的数，然后+1<br>所以这边的mean计算值比通常意义上的mean值要大</p>
+<p>计算mean</p>
+<h2 id="1count1-2count2-3-count3"><a href="#1count1-2count2-3-count3" class="headerlink" title="1count1 +2count2+3*count3"></a>1<em>count1 +2</em>count2+3*count3</h2><p>count1+count2+count3</p>
 
       
     </div>
@@ -140,7 +175,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="ciomsj4h90009zculb29atrxk" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/javaJMXMBean.html" data-id="ciomsj4fz0004zculuk7c3j0f" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -152,7 +187,7 @@ var _hmt = _hmt || [];
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra-write" data-title="cassandra 写数据以及副本放置策略" data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/"></div>
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="java MBean" data-url="http://www.webpersonaldeveloper.cn/javaJMXMBean.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -172,25 +207,6 @@ var _hmt = _hmt || [];
   </div>
   
     
-<nav id="article-nav">
-  
-    <a href="/2016/04/29/cassandra-java-driver-log/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          cassandra java driver log 配置
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/04/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 

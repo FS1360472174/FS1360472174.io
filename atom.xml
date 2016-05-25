@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-25T11:14:24.698Z</updated>
+  <updated>2016-05-21T06:55:37.004Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -14,43 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>cassandra DateTieredCompactionStrategy</title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/25/cassandra%20compaction/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/25/cassandra compaction/</id>
-    <published>2016-05-25T08:32:40.099Z</published>
-    <updated>2016-05-25T11:14:24.698Z</updated>
-    
-    <content type="html">&lt;p&gt;AbstractCompactionStrategy&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public abstract AbstractCompactionTask getNextBackgroundTask(final int gcBefore);
-//将sstable 标记为compaction-pending
-
-public abstract Collection&amp;lt;AbstractCompactionTask&amp;gt; getMaximalTask(final int gcBefore, boolean splitOutput);
-//compact cf
-
-public abstract AbstractCompactionTask getUserDefinedTask(Collection&amp;lt;SSTableReader&amp;gt; sstables, final int gcBefore);
-//压缩用户请求的compactions
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;方法：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public synchronized AbstractCompactionTask getNextBackgroundTask(int gcBefore)
-//获取下一个compactionTask,问题是gcBefore 这个值的意义是什么
-
- public static int getCompactionStrategyIndex(ColumnFamilyStore cfs, Directories locations, SSTableReader sstable)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;issues:&lt;/p&gt;
-&lt;p&gt;1.什么时候触发compaction&lt;/p&gt;
-&lt;p&gt;2.compaction时做了什么&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;AbstractCompactionStrategy&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public abstract AbstractCompactionTask getNextBackgroundTask(final int gcBefore);
-//将sstable 标记
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>docker 部署cassandra</title>
@@ -86,148 +49,6 @@ public abstract AbstractCompactionTask getUserDefinedTask(Collection&amp;lt;SSTa
     <summary type="html">
     
       &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>java MBean</title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/19/javaJMXMBean/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/19/javaJMXMBean/</id>
-    <published>2016-05-19T07:35:55.725Z</published>
-    <updated>2016-05-20T07:03:35.516Z</updated>
-    
-    <content type="html">&lt;p&gt;1.define an interface &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public interface LatencyMBean {
-   public int getCacheSize();  
-   public void setCacheSize(int size);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.define a class&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public class Latency  implements LatencyMBean{
-    public final Timer crossDCLatency;
-    private static final MetricNameFactory factory = new DefaultNameFactory(&amp;quot;Messaging&amp;quot;);
-    public Latency() {
-        crossDCLatency = Metrics.timer(factory.createMetricName(&amp;quot;CrossNodeLatency&amp;quot;));
-    }
-    @Override
-    public int getCacheSize() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-    @Override
-    public void setCacheSize(int size) {
-        // TODO Auto-generated method stub
-
-    }
-
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.register MBean&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public class Agent {
-    public static void main(String[] args)
-            throws MalformedObjectNameException, NullPointerException, InstanceAlreadyExistsException,
-            MBeanRegistrationException, NotCompliantMBeanException, InterruptedException {
-        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = new ObjectName(&amp;quot;com.fs.metrics:type=CrossDCLatency&amp;quot;); 
-        Latency mbean = new Latency();
-        server.registerMBean(mbean, name);
-
-        System.out.println(&amp;quot;waiting here for remote management...&amp;quot;);
-        Thread.sleep(Long.MAX_VALUE);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4.verify&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;E:\github\blog\source\_posts\images\MBean.png&quot; alt=&quot;two MBean&quot;&gt;&lt;/p&gt;
-&lt;p&gt;com.fs.metrics &amp;amp;&amp;amp; org.apache.cassandra.metrics.Messaging.CrossNodeLatency&lt;/p&gt;
-&lt;p&gt;5.cassandra latency 更新&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;crossDCLatency.update(5, TimeUnit.MILLISECONDS);
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个值更新，是如何影响attribute Mean,Min,Max 等值的&lt;/p&gt;
-&lt;p&gt;6.mean 等值的计算&lt;/p&gt;
-&lt;p&gt;final AtomicLongArray buckets&lt;br&gt;private final long[] bucketOffsets&lt;/p&gt;
-&lt;p&gt;AtomicLongArray 长整型数组原子操作&lt;br&gt;将值坐标为[[1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 17, 20, 24, 29, 35, 42, 50, 60, 72, 86, 103, 124, 149, 179]&lt;br&gt;这样&lt;br&gt;先判断n在这里面，如果在相应位置+1&lt;br&gt;如果n不在，使用Array.binarySearch()找到n离 序列中最近的一个最大的数，然后+1&lt;br&gt;所以这边的mean计算值比通常意义上的mean值要大&lt;/p&gt;
-&lt;p&gt;计算mean&lt;/p&gt;
-&lt;h2 id=&quot;1count1-2count2-3-count3&quot;&gt;&lt;a href=&quot;#1count1-2count2-3-count3&quot; class=&quot;headerlink&quot; title=&quot;1count1 +2count2+3*count3&quot;&gt;&lt;/a&gt;1&lt;em&gt;count1 +2&lt;/em&gt;count2+3*count3&lt;/h2&gt;&lt;p&gt;count1+count2+count3&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;1.define an interface &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public interface LatencyMBean {
-   public int getCacheSize();  
-   public void setCacheSize(int siz
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/18/cassandra-datetieredcompactionstrategy/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/18/cassandra-datetieredcompactionstrategy/</id>
-    <published>2016-05-18T09:21:17.922Z</published>
-    <updated>2016-05-19T11:12:25.140Z</updated>
-    
-    <content type="html">&lt;p&gt;-&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;-&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/15/hadoop%20rpc/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/15/hadoop rpc/</id>
-    <published>2016-05-15T09:41:00.533Z</published>
-    <updated>2016-05-15T09:47:57.152Z</updated>
-    
-    <content type="html">&lt;hr&gt;
-&lt;p&gt;title:hadoop rpc原理解析&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;RPC(remote procedure call)&lt;/p&gt;
-&lt;p&gt;RPC 与Socket区别&lt;/p&gt;
-&lt;p&gt;为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method Invocation)&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;hr&gt;
-&lt;p&gt;title:hadoop rpc原理解析&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;RPC(remote procedure call)&lt;/p&gt;
-&lt;p&gt;RPC 与Socket区别&lt;/p&gt;
-&lt;p&gt;为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method In
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hadoop环境构建</title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/15/hadoop%20environment/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/15/hadoop environment/</id>
-    <published>2016-05-15T07:55:54.422Z</published>
-    <updated>2016-05-15T09:40:05.772Z</updated>
-    
-    <content type="html">&lt;p&gt;1.eclipse,jdk,ant,hadoop&lt;/p&gt;
-&lt;p&gt;2.mvn eclipse:eclipse&lt;br&gt;protoc 出错&lt;/p&gt;
-&lt;p&gt;安装&lt;a href=&quot;http://www.cnblogs.com/tangtianfly/p/3437910.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/tangtianfly/p/3437910.html&lt;/a&gt;&lt;br&gt;注意hadoop2.6版本需要protoc2.5.0，blog中提到的版本2.4过低&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;1.eclipse,jdk,ant,hadoop&lt;/p&gt;
-&lt;p&gt;2.mvn eclipse:eclipse&lt;br&gt;protoc 出错&lt;/p&gt;
-&lt;p&gt;安装&lt;a href=&quot;http://www.cnblogs.com/tangtianfly/p/3437910.html&quot; t
     
     </summary>
     
@@ -406,13 +227,14 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
   </entry>
   
   <entry>
-    <title>cassandra develope in eclipse 环境构建</title>
+    <title>cassandra develop in eclipse 环境构建</title>
     <link href="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</id>
     <published>2016-05-05T08:07:24.235Z</published>
-    <updated>2016-05-25T11:21:44.594Z</updated>
+    <updated>2016-05-25T11:23:23.168Z</updated>
     
-    <content type="html">&lt;p&gt;#摘要#&lt;br&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;br&gt;更多cassandra,nosql 相关知识请访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;#摘要#&lt;br&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;/p&gt;
+&lt;p&gt;更多cassandra,nosql 相关知识请访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;#正文#&lt;br&gt;1.fork cassandra 代码&lt;br&gt;然后clone 到本地（cassandra-trunk 是head 分支)&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git clone https://github.com/FS1360472174/cassandra.git
 cassandra-trunk
@@ -438,7 +260,8 @@ cassandra-trunk
     
     <summary type="html">
     
-      &lt;p&gt;#摘要#&lt;br&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;br&gt;更多cassandra,nosql 相关知识请访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;br&gt;
+      &lt;p&gt;#摘要#&lt;br&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;/p&gt;
+&lt;p&gt;更多cassandra,nosql 相关知识请访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;br&gt;
     
     </summary>
     
