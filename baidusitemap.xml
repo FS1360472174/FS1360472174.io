@@ -2,35 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/15/docker%20introduce/</loc>
-    <lastmod>2016-05-25T11:34:04.823Z</lastmod>
-    <data>
-        <display>
-        <title></title>
-        <pubTime>2016-05-15T01:19:44.944Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/25/cassandra%20compaction/</loc>
-    <lastmod>2016-05-25T11:33:36.659Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra DateTieredCompactionStrategy</title>
-        <pubTime>2016-05-25T11:33:36.658Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
@@ -39,22 +11,6 @@
         <display>
         <title>cassandra develop in eclipse 环境构建</title>
         <pubTime>2016-05-05T08:07:24.235Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-    
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/</loc>
-    <lastmod>2016-05-21T06:55:37.004Z</lastmod>
-    <data>
-        <display>
-        <title>docker 部署cassandra</title>
-        <pubTime>2016-05-21T04:13:00.532Z</pubTime>
         
          
            
