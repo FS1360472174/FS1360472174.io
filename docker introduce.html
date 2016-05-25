@@ -5,28 +5,25 @@
   
   <title>web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title:hadoop rpc原理解析
-
-RPC(remote procedure call)
-RPC 与Socket区别
-为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method Invocation)">
+  <meta name="description" content="docker install:curl -fsSL https://get.docker.com/ | shservice docker start
+http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/
+docker ps -a 查看所有的container
+client 想要访问docker中的子网，需要在client端配置路">
 <meta property="og:type" content="website">
 <meta property="og:title" content="web personal developer">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/hadoop rpc.html">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/docker introduce.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="title:hadoop rpc原理解析
-
-RPC(remote procedure call)
-RPC 与Socket区别
-为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method Invocation)">
-<meta property="og:updated_time" content="2016-05-15T09:47:57.152Z">
+<meta property="og:description" content="docker install:curl -fsSL https://get.docker.com/ | shservice docker start
+http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/
+docker ps -a 查看所有的container
+client 想要访问docker中的子网，需要在client端配置路">
+<meta property="og:updated_time" content="2016-05-20T09:46:13.055Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web personal developer">
-<meta name="twitter:description" content="title:hadoop rpc原理解析
-
-RPC(remote procedure call)
-RPC 与Socket区别
-为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method Invocation)">
+<meta name="twitter:description" content="docker install:curl -fsSL https://get.docker.com/ | shservice docker start
+http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/
+docker ps -a 查看所有的container
+client 想要访问docker中的子网，需要在client端配置路">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -88,8 +85,8 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/hadoop rpc.html" class="article-date">
-  <time datetime="2016-05-25T11:31:21.230Z" itemprop="datePublished">2016-05-25</time>
+    <a href="/docker introduce.html" class="article-date">
+  <time datetime="2016-05-25T11:34:04.824Z" itemprop="datePublished">2016-05-25</time>
 </a>
     
   </div>
@@ -98,12 +95,23 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p>title:hadoop rpc原理解析</p>
-<hr>
-<p>RPC(remote procedure call)</p>
-<p>RPC 与Socket区别</p>
-<p>为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method Invocation)</p>
+        <p>docker install:<br>curl -fsSL <a href="https://get.docker.com/" target="_blank" rel="external">https://get.docker.com/</a> | sh<br>service docker start</p>
+<p><a href="http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/" target="_blank" rel="external">http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/</a></p>
+<p>docker ps -a 查看所有的container</p>
+<p>client 想要访问docker中的子网，需要在client端配置路由</p>
+<p>route add -net server-ip netmask 255.255.255.0<br>gw client-ip</p>
+<p>route del -net  </p>
+<p>iptables 配置NAT 实例<br>//删除所有的配置<br>iptables -t nat -F POSTROUTING<br>iptables -t nat -A POSTROUTING -s 172.17.44.0/24 ! -d 172.17.0.0/16 -j MASQUERADE</p>
+<p>docker log(cassandra 启动失败日志)<br>docker logs containername</p>
+<p>docker bash 安装命令<br>apt-get update<br>apt-get install vim</p>
+<p>docker run –name n1 -d -e CASSANDRA_SEEDS=172.17.42.2 -e CASSANDRA_DC=DC2 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch cassandra  </p>
+<p><strong>attention:</strong><br>两个DC 通信需要相互设置路由<br>route add -net 172.17.44.0 netmask 255.255.255.0 gw 10.115.73.27</p>
+<p>172.17.44.0     toscana3.rtp.ra 255.255.255.0   UG    0      0        0 eno16780032</p>
+<p>docker rmi imageid</p>
+<p>docker build images<br> net (.表示当前目录)<br><a href="https://docs.docker.com/engine/reference/commandline/build/" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/build/</a></p>
+<p>清除日志</p>
+<p>此方法慎用<br>truncate -s 0 /var/lib/docker/containers/<em>/</em>-json.log</p>
+<p><a href="https://segmentfault.com/a/1190000002766882" target="_blank" rel="external">https://segmentfault.com/a/1190000002766882</a></p>
 
       
     </div>
@@ -111,7 +119,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/hadoop rpc.html" data-id="ciomsm8jw00039culdcs7uqim" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/docker introduce.html" data-id="ciomsm8ju00029culmb96uo8z" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -123,7 +131,7 @@ var _hmt = _hmt || [];
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="page-undefined" data-title="" data-url="http://www.webpersonaldeveloper.cn/hadoop rpc.html"></div>
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="" data-url="http://www.webpersonaldeveloper.cn/docker introduce.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
