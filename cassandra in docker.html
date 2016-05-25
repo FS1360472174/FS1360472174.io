@@ -3,27 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>web personal developer</title>
+  <title>docker 部署cassandra | web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="docker install:curl -fsSL https://get.docker.com/ | shservice docker start
-http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/
-docker ps -a 查看所有的container
-client 想要访问docker中的子网，需要在client端配置路">
-<meta property="og:type" content="article">
-<meta property="og:title" content="web personal developer">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/index.html">
+  <meta name="description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题">
+<meta property="og:type" content="website">
+<meta property="og:title" content="docker 部署cassandra">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/cassandra in docker.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="docker install:curl -fsSL https://get.docker.com/ | shservice docker start
-http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/
-docker ps -a 查看所有的container
-client 想要访问docker中的子网，需要在client端配置路">
-<meta property="og:updated_time" content="2016-05-25T11:34:04.823Z">
+<meta property="og:description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题">
+<meta property="og:updated_time" content="2016-05-21T06:55:37.004Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="web personal developer">
-<meta name="twitter:description" content="docker install:curl -fsSL https://get.docker.com/ | shservice docker start
-http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/
-docker ps -a 查看所有的container
-client 想要访问docker中的子网，需要在client端配置路">
+<meta name="twitter:title" content="docker 部署cassandra">
+<meta name="twitter:description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -83,35 +74,50 @@ var _hmt = _hmt || [];
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-docker introduce" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/05/15/docker introduce/" class="article-date">
-  <time datetime="2016-05-15T01:19:44.944Z" itemprop="datePublished">2016-05-15</time>
+    <a href="/cassandra in docker.html" class="article-date">
+  <time datetime="2016-05-25T11:35:30.640Z" itemprop="datePublished">2016-05-25</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      docker 部署cassandra
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>docker install:<br>curl -fsSL <a href="https://get.docker.com/" target="_blank" rel="external">https://get.docker.com/</a> | sh<br>service docker start</p>
-<p><a href="http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/" target="_blank" rel="external">http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/</a></p>
-<p>docker ps -a 查看所有的container</p>
-<p>client 想要访问docker中的子网，需要在client端配置路由</p>
-<p>route add -net server-ip netmask 255.255.255.0<br>gw client-ip</p>
-<p>route del -net  </p>
-<p>iptables 配置NAT 实例<br>//删除所有的配置<br>iptables -t nat -F POSTROUTING<br>iptables -t nat -A POSTROUTING -s 172.17.44.0/24 ! -d 172.17.0.0/16 -j MASQUERADE</p>
-<p>docker log(cassandra 启动失败日志)<br>docker logs containername</p>
-<p>docker bash 安装命令<br>apt-get update<br>apt-get install vim</p>
-<p>docker run –name n1 -d -e CASSANDRA_SEEDS=172.17.42.2 -e CASSANDRA_DC=DC2 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch cassandra  </p>
-<p><strong>attention:</strong><br>两个DC 通信需要相互设置路由<br>route add -net 172.17.44.0 netmask 255.255.255.0 gw 10.115.73.27</p>
-<p>172.17.44.0     toscana3.rtp.ra 255.255.255.0   UG    0      0        0 eno16780032</p>
-<p>docker rmi imageid</p>
-<p>docker build images<br> net (.表示当前目录)<br><a href="https://docs.docker.com/engine/reference/commandline/build/" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/build/</a></p>
-<p>清除日志</p>
-<p>此方法慎用<br>truncate -s 0 /var/lib/docker/containers/<em>/</em>-json.log</p>
-<p><a href="https://segmentfault.com/a/1190000002766882" target="_blank" rel="external">https://segmentfault.com/a/1190000002766882</a></p>
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要<br>讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题</p>
+<a id="more"></a>
+<h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>最简单的方法，利用已有的脚本</p>
+<pre><code>curl -fsSL https://get.docker.com/ | sh
+</code></pre><p>然后启动docker 服务</p>
+<pre><code>service docker start
+</code></pre><p>验证</p>
+<pre><code>docker run hello-world
+</code></pre><h1 id="docker-run-cassandra"><a href="#docker-run-cassandra" class="headerlink" title="docker run cassandra"></a>docker run cassandra</h1><pre><code>docker run --name $CONTAINER_NAME -d -e CASSANDRA-BROADCAST_ADDRESS=xxx.xxx.xxx.xxx
+
+ -e CASSANDRA_DC=XX -e CASSANDRA_RACK=XXX cassandra
+</code></pre><p>可以添加的参数有很多，通常下列这些参数需要指定</p>
+<p>CASSANDRA_LISTEN_ADDRESS:监听进来的连接地址，在docker中默认使用的就是container的ip address</p>
+<p>CASSANDRA_BROADCAST_ADDRESS:广播给别的node的地址。</p>
+<p>CASSANDRA_SEEDS：cassandra bootstrap时通信的节点</p>
+<p>CASSANDRA_DC:multi datacenter 时需要指定datacenter 名</p>
+<p>CASSANDRA_RACK：cassandra机架号</p>
+<p>CASSANDRA_ENDPOITN_SNITCH:网络拓扑策略，用来找寻节点，生产环境一般建议使用GossipingPropertyFileSnitch</p>
+<h1 id="multi-datacenter-amp-networking"><a href="#multi-datacenter-amp-networking" class="headerlink" title="multi datacenter &amp; networking"></a>multi datacenter &amp; networking</h1><p>在6 servers 上部署两个cassandra datacenter，每个datacenter 3nodes.</p>
+<pre><code>docker run --name $CONTAINER_NAME -d -e CASSANDRA_BROADCAST_ADDRESS=XXX -e CASSANDRA_DC=DC1 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -p 7000:7000 -p 9042:9042 cassandra
+</code></pre><p>这里需要将CASSANDRA_BROADCAST_ADDRESS 指定为server 的ip</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://hub.docker.com/_/cassandra/" target="_blank" rel="external">https://hub.docker.com/_/cassandra/</a></p>
 
       
     </div>
@@ -119,7 +125,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/" data-id="ciomso80h000buoulc8x77l6y" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html" data-id="ciomso7z80001uoulmcft865l" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -131,7 +137,7 @@ var _hmt = _hmt || [];
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-docker introduce" data-title="" data-url="http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/"></div>
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="docker 部署cassandra" data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -151,16 +157,6 @@ var _hmt = _hmt || [];
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2016/05/06/How to install dummynet on redhat/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">redhat7 上安装dummynet</div>
-    </a>
-  
-</nav>
-
   
 </article>
 

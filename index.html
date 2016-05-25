@@ -75,156 +75,6 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
-    <article id="post-cassandra compaction" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/cassandra compaction/" class="article-date">
-  <time datetime="2016-05-25T11:33:36.658Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/cassandra compaction/">cassandra DateTieredCompactionStrategy</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AbstractCompactionStrategy</p>
-<pre><code>public abstract AbstractCompactionTask getNextBackgroundTask(final int gcBefore);
-//将sstable 标记为compaction-pending
-
-public abstract Collection&lt;AbstractCompactionTask&gt; getMaximalTask(final int gcBefore, boolean splitOutput);
-//compact cf
-
-public abstract AbstractCompactionTask getUserDefinedTask(Collection&lt;SSTableReader&gt; sstables, final int gcBefore);
-//压缩用户请求的compactions
-</code></pre><p>方法：</p>
-<pre><code>public synchronized AbstractCompactionTask getNextBackgroundTask(int gcBefore)
-//获取下一个compactionTask,问题是gcBefore 这个值的意义是什么
-
- public static int getCompactionStrategyIndex(ColumnFamilyStore cfs, Directories locations, SSTableReader sstable)
-</code></pre><p>issues:</p>
-<p>1.什么时候触发compaction</p>
-<p>2.compaction时做了什么</p>
-
-      
-    </div>
-	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-    </span>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/25/cassandra compaction/" data-id="ciomsm8lb000e9cul4uolagb7" class="article-share-link">Share</a>
-      
-      
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-      <script>window._bd_share_config=
-	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
-	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
-	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
-	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-	  </script>	
-	  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra compaction" data-title="cassandra DateTieredCompactionStrategy" data-url="undefined"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-cassandra in docker" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/21/cassandra in docker/" class="article-date">
-  <time datetime="2016-05-21T04:13:00.532Z" itemprop="datePublished">2016-05-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/21/cassandra in docker/">docker 部署cassandra</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要<br>讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/05/21/cassandra in docker/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-    </span>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/" data-id="ciomsm8kw00079cul9fq9guat" class="article-share-link">Share</a>
-      
-      
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-      <script>window._bd_share_config=
-	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
-	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
-	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
-	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-	  </script>	
-	  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra in docker" data-title="docker 部署cassandra" data-url="undefined"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-docker introduce" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/15/docker introduce/" class="article-date">
@@ -261,7 +111,7 @@ public abstract AbstractCompactionTask getUserDefinedTask(Collection&lt;SSTableR
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/" data-id="ciomsm8la000d9culxqmcozvb" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/" data-id="ciomso80h000buoulc8x77l6y" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -333,7 +183,7 @@ public abstract AbstractCompactionTask getUserDefinedTask(Collection&lt;SSTableR
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="ciomsm8kp00069cul1rypwsnq" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="ciomso8010007uoul0kddgbow" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -405,7 +255,7 @@ public abstract AbstractCompactionTask getUserDefinedTask(Collection&lt;SSTableR
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="ciomsm8l7000b9cul2xd4v0wz" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="ciomso80l000duoulgncqd7wf" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -475,7 +325,7 @@ public abstract AbstractCompactionTask getUserDefinedTask(Collection&lt;SSTableR
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="ciomsm8kz00089culuowleor6" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="ciomso8080008uoulwf7uallz" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -597,7 +447,7 @@ set level to TRACE to also log query parameters
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="ciomsm8l400099cula9psel7f" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="ciomso80e0009uoul5s4lega2" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -683,7 +533,7 @@ set level to TRACE to also log query parameters
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="ciomsm8l6000a9cullwdy5r0p" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="ciomso80g000auoul2ixatgty" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -756,7 +606,7 @@ set level to TRACE to also log query parameters
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="ciomsm8l8000c9culklj49dm6" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="ciomso80j000cuouljn20jyc7" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -821,14 +671,6 @@ set level to TRACE to also log query parameters
       <ul>
         
           <li>
-            <a href="/2016/05/25/cassandra compaction/">cassandra DateTieredCompactionStrategy</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/21/cassandra in docker/">docker 部署cassandra</a>
-          </li>
-        
-          <li>
             <a href="/2016/05/15/docker introduce/">(no title)</a>
           </li>
         
@@ -838,6 +680,14 @@ set level to TRACE to also log query parameters
         
           <li>
             <a href="/2016/05/05/git/">git 常用命令</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/05/cassandra-buildin-eclipse/">cassandra develop in eclipse 环境构建</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/cassandra-java-driver-log/">cassandra java driver log 配置</a>
           </li>
         
       </ul>

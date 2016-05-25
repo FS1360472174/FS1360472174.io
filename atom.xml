@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-25T11:33:36.659Z</updated>
+  <updated>2016-05-25T11:34:04.823Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -14,83 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>cassandra DateTieredCompactionStrategy</title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/25/cassandra%20compaction/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/25/cassandra compaction/</id>
-    <published>2016-05-25T11:33:36.658Z</published>
-    <updated>2016-05-25T11:33:36.659Z</updated>
-    
-    <content type="html">&lt;p&gt;AbstractCompactionStrategy&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public abstract AbstractCompactionTask getNextBackgroundTask(final int gcBefore);
-//将sstable 标记为compaction-pending
-
-public abstract Collection&amp;lt;AbstractCompactionTask&amp;gt; getMaximalTask(final int gcBefore, boolean splitOutput);
-//compact cf
-
-public abstract AbstractCompactionTask getUserDefinedTask(Collection&amp;lt;SSTableReader&amp;gt; sstables, final int gcBefore);
-//压缩用户请求的compactions
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;方法：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public synchronized AbstractCompactionTask getNextBackgroundTask(int gcBefore)
-//获取下一个compactionTask,问题是gcBefore 这个值的意义是什么
-
- public static int getCompactionStrategyIndex(ColumnFamilyStore cfs, Directories locations, SSTableReader sstable)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;issues:&lt;/p&gt;
-&lt;p&gt;1.什么时候触发compaction&lt;/p&gt;
-&lt;p&gt;2.compaction时做了什么&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;AbstractCompactionStrategy&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public abstract AbstractCompactionTask getNextBackgroundTask(final int gcBefore);
-//将sstable 标记
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>docker 部署cassandra</title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/</id>
-    <published>2016-05-21T04:13:00.532Z</published>
-    <updated>2016-05-21T06:55:37.004Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1 id=&quot;安装docker&quot;&gt;&lt;a href=&quot;#安装docker&quot; class=&quot;headerlink&quot; title=&quot;安装docker&quot;&gt;&lt;/a&gt;安装docker&lt;/h1&gt;&lt;p&gt;最简单的方法，利用已有的脚本&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;curl -fsSL https://get.docker.com/ | sh
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后启动docker 服务&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;service docker start
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;验证&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker run hello-world
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;docker-run-cassandra&quot;&gt;&lt;a href=&quot;#docker-run-cassandra&quot; class=&quot;headerlink&quot; title=&quot;docker run cassandra&quot;&gt;&lt;/a&gt;docker run cassandra&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;docker run --name $CONTAINER_NAME -d -e CASSANDRA-BROADCAST_ADDRESS=xxx.xxx.xxx.xxx
-
- -e CASSANDRA_DC=XX -e CASSANDRA_RACK=XXX cassandra
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以添加的参数有很多，通常下列这些参数需要指定&lt;/p&gt;
-&lt;p&gt;CASSANDRA_LISTEN_ADDRESS:监听进来的连接地址，在docker中默认使用的就是container的ip address&lt;/p&gt;
-&lt;p&gt;CASSANDRA_BROADCAST_ADDRESS:广播给别的node的地址。&lt;/p&gt;
-&lt;p&gt;CASSANDRA_SEEDS：cassandra bootstrap时通信的节点&lt;/p&gt;
-&lt;p&gt;CASSANDRA_DC:multi datacenter 时需要指定datacenter 名&lt;/p&gt;
-&lt;p&gt;CASSANDRA_RACK：cassandra机架号&lt;/p&gt;
-&lt;p&gt;CASSANDRA_ENDPOITN_SNITCH:网络拓扑策略，用来找寻节点，生产环境一般建议使用GossipingPropertyFileSnitch&lt;/p&gt;
-&lt;h1 id=&quot;multi-datacenter-amp-networking&quot;&gt;&lt;a href=&quot;#multi-datacenter-amp-networking&quot; class=&quot;headerlink&quot; title=&quot;multi datacenter &amp;amp; networking&quot;&gt;&lt;/a&gt;multi datacenter &amp;amp; networking&lt;/h1&gt;&lt;p&gt;在6 servers 上部署两个cassandra datacenter，每个datacenter 3nodes.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker run --name $CONTAINER_NAME -d -e CASSANDRA_BROADCAST_ADDRESS=XXX -e CASSANDRA_DC=DC1 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -p 7000:7000 -p 9042:9042 cassandra
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里需要将CASSANDRA_BROADCAST_ADDRESS 指定为server 的ip&lt;/p&gt;
-&lt;h1 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://hub.docker.com/_/cassandra/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hub.docker.com/_/cassandra/&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title></title>
