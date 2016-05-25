@@ -3,12 +3,132 @@
 
     
   <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
+    <lastmod>2016-05-25T11:21:44.594Z</lastmod>
+    <data>
+        <display>
+        <title>cassandra develope in eclipse 环境构建</title>
+        <pubTime>2016-05-05T08:07:24.235Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/25/cassandra%20compaction/</loc>
+    <lastmod>2016-05-25T11:14:24.698Z</lastmod>
+    <data>
+        <display>
+        <title>cassandra DateTieredCompactionStrategy</title>
+        <pubTime>2016-05-25T08:32:40.099Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/</loc>
+    <lastmod>2016-05-21T06:55:37.004Z</lastmod>
+    <data>
+        <display>
+        <title>docker 部署cassandra</title>
+        <pubTime>2016-05-21T04:13:00.532Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/15/docker%20introduce/</loc>
+    <lastmod>2016-05-20T09:46:13.055Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2016-05-15T01:19:44.944Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/19/javaJMXMBean/</loc>
+    <lastmod>2016-05-20T07:03:35.516Z</lastmod>
+    <data>
+        <display>
+        <title>java MBean</title>
+        <pubTime>2016-05-19T07:35:55.725Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/</loc>
-    <lastmod>2016-05-07T14:03:36.480Z</lastmod>
+    <lastmod>2016-05-20T05:53:02.345Z</lastmod>
     <data>
         <display>
         <title>redhat7 上安装dummynet</title>
         <pubTime>2016-05-06T01:44:41.792Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/18/cassandra-datetieredcompactionstrategy/</loc>
+    <lastmod>2016-05-19T11:12:25.140Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2016-05-18T09:21:17.922Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/15/hadoop%20rpc/</loc>
+    <lastmod>2016-05-15T09:47:57.152Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2016-05-15T09:41:00.533Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/15/hadoop%20environment/</loc>
+    <lastmod>2016-05-15T09:40:05.772Z</lastmod>
+    <data>
+        <display>
+        <title>hadoop环境构建</title>
+        <pubTime>2016-05-15T07:55:54.422Z</pubTime>
         
          
            
@@ -24,21 +144,6 @@
         <display>
         <title>git 常用命令</title>
         <pubTime>2016-05-05T08:10:41.853Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
-    <lastmod>2016-05-05T08:55:43.533Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra develope in eclipse 环境构建</title>
-        <pubTime>2016-05-05T08:07:24.235Z</pubTime>
         
          
            

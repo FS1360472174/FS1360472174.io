@@ -15,7 +15,7 @@
 <meta property="og:description" content="更多请访问 http://www.webpersonaldeveloper.cn
 摘要：在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数
 提醒如果你要部署在Redhat6,CentOS6等内核版本比较低的平台">
-<meta property="og:updated_time" content="2016-05-07T14:03:36.480Z">
+<meta property="og:updated_time" content="2016-05-20T05:53:02.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redhat7 上安装dummynet">
 <meta name="twitter:description" content="更多请访问 http://www.webpersonaldeveloper.cn
@@ -133,13 +133,16 @@ cd dummynet
 make KERNELPATH=/usr/src/kernels/3.10.0-327.13.1.el7.x86_64
 </code></pre><p><strong>加载ipfw 模块</strong></p>
 <pre><code>cd kipfw-mod
-insmod ipfw-mod.ko
+insmod ipfw_mod.ko
 cd dummy/ipfw
 cp ipfw /sbin
 chmod 700 /sbin/ipfw
 </code></pre><p><strong>验证ipfw</strong></p>
-<pre><code>ipfw add pipe 2 in proto tcp
-</code></pre><p><strong>optional,将ipfw 设置为boot启动</strong></p>
+<pre><code>ipfw add pipe 1 icmp from xxx to xxx
+ipfw pipe 1 config delay 100ms
+ipfw pipe 1 config bw 128Kbytes/s 
+</code></pre><p>删除某个pipe<br>     ipfw delete #num</p>
+<p><strong>optional,将ipfw 设置为boot启动</strong></p>
 <pre><code>cp ipfw_mod.ko /lib/modules/3.10.0-327.13.1.el7.x86_64/kernel/net/netfilter
 depmod
 sh -c &apos;echo modprobe ipfw_mod &gt;&gt; /etc/rc.modules&apos;
@@ -191,7 +194,7 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cinxy0wr90000wgul8jaczaly" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="ciomrzbd4000b30ul4pn53yaj" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -224,6 +227,15 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/05/15/docker introduce/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2016/05/05/git/" id="article-nav-older" class="article-nav-link-wrap">
@@ -265,23 +277,23 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
       <ul>
         
           <li>
-            <a href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
+            <a href="/2016/05/25/cassandra compaction/">cassandra DateTieredCompactionStrategy</a>
           </li>
         
           <li>
-            <a href="/2016/05/05/git/">git 常用命令</a>
+            <a href="/2016/05/21/cassandra in docker/">docker 部署cassandra</a>
           </li>
         
           <li>
-            <a href="/2016/05/05/cassandra-buildin-eclipse/">cassandra develope in eclipse 环境构建</a>
+            <a href="/2016/05/19/javaJMXMBean/">java MBean</a>
           </li>
         
           <li>
-            <a href="/2016/04/29/cassandra-java-driver-log/">cassandra java driver log 配置</a>
+            <a href="/2016/05/18/cassandra-datetieredcompactionstrategy/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2016/04/28/cassandra-write/">cassandra 写数据以及副本放置策略</a>
+            <a href="/2016/05/15/hadoop rpc/">(no title)</a>
           </li>
         
       </ul>

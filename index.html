@@ -75,6 +75,522 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
+    <article id="post-cassandra compaction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/25/cassandra compaction/" class="article-date">
+  <time datetime="2016-05-25T08:32:40.099Z" itemprop="datePublished">2016-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/25/cassandra compaction/">cassandra DateTieredCompactionStrategy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AbstractCompactionStrategy</p>
+<pre><code>public abstract AbstractCompactionTask getNextBackgroundTask(final int gcBefore);
+//将sstable 标记为compaction-pending
+
+public abstract Collection&lt;AbstractCompactionTask&gt; getMaximalTask(final int gcBefore, boolean splitOutput);
+//compact cf
+
+public abstract AbstractCompactionTask getUserDefinedTask(Collection&lt;SSTableReader&gt; sstables, final int gcBefore);
+//压缩用户请求的compactions
+</code></pre><p>方法：</p>
+<pre><code>public synchronized AbstractCompactionTask getNextBackgroundTask(int gcBefore)
+//获取下一个compactionTask,问题是gcBefore 这个值的意义是什么
+
+ public static int getCompactionStrategyIndex(ColumnFamilyStore cfs, Directories locations, SSTableReader sstable)
+</code></pre><p>issues:</p>
+<p>1.什么时候触发compaction</p>
+<p>2.compaction时做了什么</p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/25/cassandra compaction/" data-id="ciomrzbbn000030uloy8sccr4" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-cassandra compaction" data-title="cassandra DateTieredCompactionStrategy" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cassandra in docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/21/cassandra in docker/" class="article-date">
+  <time datetime="2016-05-21T04:13:00.532Z" itemprop="datePublished">2016-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/21/cassandra in docker/">docker 部署cassandra</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要<br>讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/21/cassandra in docker/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/" data-id="ciomrzbca000330ul75huaa6s" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-cassandra in docker" data-title="docker 部署cassandra" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javaJMXMBean" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/19/javaJMXMBean/" class="article-date">
+  <time datetime="2016-05-19T07:35:55.725Z" itemprop="datePublished">2016-05-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/19/javaJMXMBean/">java MBean</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.define an interface </p>
+<pre><code>public interface LatencyMBean {
+   public int getCacheSize();  
+   public void setCacheSize(int size);
+}
+</code></pre><p>2.define a class</p>
+<pre><code>public class Latency  implements LatencyMBean{
+    public final Timer crossDCLatency;
+    private static final MetricNameFactory factory = new DefaultNameFactory(&quot;Messaging&quot;);
+    public Latency() {
+        crossDCLatency = Metrics.timer(factory.createMetricName(&quot;CrossNodeLatency&quot;));
+    }
+    @Override
+    public int getCacheSize() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    @Override
+    public void setCacheSize(int size) {
+        // TODO Auto-generated method stub
+
+    }
+
+}
+</code></pre><p>3.register MBean</p>
+<pre><code>public class Agent {
+    public static void main(String[] args)
+            throws MalformedObjectNameException, NullPointerException, InstanceAlreadyExistsException,
+            MBeanRegistrationException, NotCompliantMBeanException, InterruptedException {
+        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name = new ObjectName(&quot;com.fs.metrics:type=CrossDCLatency&quot;); 
+        Latency mbean = new Latency();
+        server.registerMBean(mbean, name);
+
+        System.out.println(&quot;waiting here for remote management...&quot;);
+        Thread.sleep(Long.MAX_VALUE);
+    }
+}
+</code></pre><p>4.verify</p>
+<p><img src="E:\github\blog\source\_posts\images\MBean.png" alt="two MBean"></p>
+<p>com.fs.metrics &amp;&amp; org.apache.cassandra.metrics.Messaging.CrossNodeLatency</p>
+<p>5.cassandra latency 更新</p>
+<pre><code>crossDCLatency.update(5, TimeUnit.MILLISECONDS);
+</code></pre><p>这个值更新，是如何影响attribute Mean,Min,Max 等值的</p>
+<p>6.mean 等值的计算</p>
+<p>final AtomicLongArray buckets<br>private final long[] bucketOffsets</p>
+<p>AtomicLongArray 长整型数组原子操作<br>将值坐标为[[1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 17, 20, 24, 29, 35, 42, 50, 60, 72, 86, 103, 124, 149, 179]<br>这样<br>先判断n在这里面，如果在相应位置+1<br>如果n不在，使用Array.binarySearch()找到n离 序列中最近的一个最大的数，然后+1<br>所以这边的mean计算值比通常意义上的mean值要大</p>
+<p>计算mean</p>
+<h2 id="1count1-2count2-3-count3"><a href="#1count1-2count2-3-count3" class="headerlink" title="1count1 +2count2+3*count3"></a>1<em>count1 +2</em>count2+3*count3</h2><p>count1+count2+count3</p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/19/javaJMXMBean/" data-id="ciomrzbd6000c30ulhu18y0yg" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-javaJMXMBean" data-title="java MBean" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cassandra-datetieredcompactionstrategy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/18/cassandra-datetieredcompactionstrategy/" class="article-date">
+  <time datetime="2016-05-18T09:21:17.922Z" itemprop="datePublished">2016-05-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>-</p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/18/cassandra-datetieredcompactionstrategy/" data-id="ciomrzbbx000230ulr0bm02yc" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-cassandra-datetieredcompactionstrategy" data-title="" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hadoop rpc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/15/hadoop rpc/" class="article-date">
+  <time datetime="2016-05-15T09:41:00.533Z" itemprop="datePublished">2016-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title:hadoop rpc原理解析</p>
+<hr>
+<p>RPC(remote procedure call)</p>
+<p>RPC 与Socket区别</p>
+<p>为什么使用hadoop 的RPC,而不是JDK的RMI(Remote Method Invocation)</p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/15/hadoop rpc/" data-id="ciomrzbcf000630uldt292rxa" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-hadoop rpc" data-title="" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hadoop environment" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/15/hadoop environment/" class="article-date">
+  <time datetime="2016-05-15T07:55:54.422Z" itemprop="datePublished">2016-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/15/hadoop environment/">hadoop环境构建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.eclipse,jdk,ant,hadoop</p>
+<p>2.mvn eclipse:eclipse<br>protoc 出错</p>
+<p>安装<a href="http://www.cnblogs.com/tangtianfly/p/3437910.html" target="_blank" rel="external">http://www.cnblogs.com/tangtianfly/p/3437910.html</a><br>注意hadoop2.6版本需要protoc2.5.0，blog中提到的版本2.4过低</p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/15/hadoop environment/" data-id="ciomrzbcd000530ulnfo04vk6" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-hadoop environment" data-title="hadoop环境构建" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-docker introduce" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/15/docker introduce/" class="article-date">
+  <time datetime="2016-05-15T01:19:44.944Z" itemprop="datePublished">2016-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>docker install:<br>curl -fsSL <a href="https://get.docker.com/" target="_blank" rel="external">https://get.docker.com/</a> | sh<br>service docker start</p>
+<p><a href="http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/" target="_blank" rel="external">http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/</a></p>
+<p>docker ps -a 查看所有的container</p>
+<p>client 想要访问docker中的子网，需要在client端配置路由</p>
+<p>route add -net server-ip netmask 255.255.255.0<br>gw client-ip</p>
+<p>route del -net  </p>
+<p>iptables 配置NAT 实例<br>//删除所有的配置<br>iptables -t nat -F POSTROUTING<br>iptables -t nat -A POSTROUTING -s 172.17.44.0/24 ! -d 172.17.0.0/16 -j MASQUERADE</p>
+<p>docker log(cassandra 启动失败日志)<br>docker logs containername</p>
+<p>docker bash 安装命令<br>apt-get update<br>apt-get install vim</p>
+<p>docker run –name n1 -d -e CASSANDRA_SEEDS=172.17.42.2 -e CASSANDRA_DC=DC2 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch cassandra  </p>
+<p><strong>attention:</strong><br>两个DC 通信需要相互设置路由<br>route add -net 172.17.44.0 netmask 255.255.255.0 gw 10.115.73.27</p>
+<p>172.17.44.0     toscana3.rtp.ra 255.255.255.0   UG    0      0        0 eno16780032</p>
+<p>docker rmi imageid</p>
+<p>docker build images<br> net (.表示当前目录)<br><a href="https://docs.docker.com/engine/reference/commandline/build/" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/build/</a></p>
+<p>清除日志</p>
+<p>此方法慎用<br>truncate -s 0 /var/lib/docker/containers/<em>/</em>-json.log</p>
+<p><a href="https://segmentfault.com/a/1190000002766882" target="_blank" rel="external">https://segmentfault.com/a/1190000002766882</a></p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/" data-id="ciomrzbcw000a30ul6603lle7" class="article-share-link">Delen</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-docker introduce" data-title="" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-How to install dummynet on redhat" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/06/How to install dummynet on redhat/" class="article-date">
@@ -112,7 +628,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cinxy0wr90000wgul8jaczaly" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="ciomrzbd4000b30ul4pn53yaj" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -184,7 +700,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cinxy0ws00004wguleld9voj6" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="ciomrzbci000730ulzotzkwkj" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -241,26 +757,19 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.fork cassandra 代码<br>然后clone 到本地（cassandra-trunk 是head 分支)</p>
-<pre><code>git clone https://github.com/FS1360472174/cassandra.git
-cassandra-trunk
-</code></pre><p>2.<code>ant build</code></p>
-<p>这边有可能会出现字符编码问题，手动清除一下</p>
-<p>3.生成eclipse工程</p>
-<pre><code>ant generate-eclipse-files
-</code></pre><p>4.生成jar包</p>
-<pre><code>ant
-</code></pre><p>build 目录下会生成apache-cassandra-xxx.jar</p>
-<p><strong>references</strong></p>
-<p><a href="https://wiki.apache.org/cassandra/RunningCassandraInEclipse" target="_blank" rel="external">https://wiki.apache.org/cassandra/RunningCassandraInEclipse</a></p>
-
+        <p>#摘要#<br>本文主要介绍如何在eclipse中搭建cassandra环境<br>更多cassandra,nosql 相关知识请访问<a href="http://www.webpersonaldeveloper.cn">http://www.webpersonaldeveloper.cn</a><br>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/05/cassandra-buildin-eclipse/#more">Read More</a>
+          </p>
+        
       
     </div>
 	 <span id="busuanzi_container_page_pv">
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cinxy0ws30005wgul5e4rs3gm" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="ciomrzbbu000130uljr7td53a" class="article-share-link">Delen</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -295,288 +804,11 @@ cassandra-trunk
 
 
   
-    <article id="post-cassandra-java-driver-log" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/29/cassandra-java-driver-log/" class="article-date">
-  <time datetime="2016-04-29T09:04:27.756Z" itemprop="datePublished">2016-04-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/29/cassandra-java-driver-log/">cassandra java driver log 配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>enable/disable trace log</strong></p>
-<p>工程中不导入logback-classic.jar,logback-core.jar</p>
-<p>注意我们同样可以使用slf4j 来解决这个问题<br><a href="http://www.slf4j.org/codes.html#StaticLoggerBinder" target="_blank" rel="external">http://www.slf4j.org/codes.html#StaticLoggerBinder</a></p>
-<pre><code>SLF4J: Failed to load class &quot;org.slf4j.impl.StaticLoggerBinder&quot;.
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-</code></pre><p>但是这样太过粗暴了，有时候我们需要java-driver的调试信息，比如像下面这样有用的信息</p>
-<pre><code>DEBUG [cluster2] [/XXX:9042] Query completed normally, took 264 ms: [1 bound values] select * from TABLE where userid=? limit 5;
-</code></pre><p>但是默认的java-driver 级别是DEBUG,导致console中打印了太多的内容。</p>
-<p>造成了视觉污染，同时很难发现自己需要的。</p>
-<p><strong>配置日志打印级别</strong></p>
-<p>方案1</p>
-<p>在每个insert/query 中设置disable/enable trace</p>
-<pre><code>PreparedStatement ps = session.prepare(&quot;&quot;);
-ps.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM).disableTracing();
-</code></pre><p>方案2</p>
-<p>方案1有效，但是试用场景有限，需要一个可配置的文件进行全局设置<br>以logback 为例。需要logback.xml 来配置，自定义DEBUG/INFO/WARN/WRONG级别</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;configuration&gt;
-&lt;!-- log INFO or higher messages to the console --&gt;
-&lt;appender name=&quot;console&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
-    &lt;encoder&gt;
-        &lt;pattern&gt;%-5p %msg%n&lt;/pattern&gt;
-    &lt;/encoder&gt;
-&lt;/appender&gt;
-
-&lt;!-- log everything to a rolling file --&gt;
-&lt;appender name=&quot;file&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
-    &lt;file&gt;driver.log&lt;/file&gt;
-    &lt;encoder&gt;
-        &lt;pattern&gt;%-5p [%d{ISO8601}] [%t] %F:%L - %msg%n&lt;/pattern&gt;
-    &lt;/encoder&gt;
-    &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
-        &lt;!-- daily rollover --&gt;
-        &lt;fileNamePattern&gt;driver.%d{yyyy-MM-dd}.log&lt;/fileNamePattern&gt;
-        &lt;!-- keep 30 days&apos; worth of history --&gt;
-        &lt;maxHistory&gt;30&lt;/maxHistory&gt;
-&lt;/rollingPolicy&gt;
-&lt;/appender&gt;
-
-&lt;!-- use AsyncAppender for lower latencies --&gt;
-&lt;appender name=&quot;async&quot; class=&quot;ch.qos.logback.classic.AsyncAppender&quot;&gt;
-    &lt;appender-ref ref=&quot;console&quot; /&gt;
-    &lt;appender-ref ref=&quot;file&quot; /&gt;
-&lt;/appender&gt;
-
-&lt;!--
-Turn on slow query logging by setting this logger to DEBUG; 
-set level to TRACE to also log query parameters 
---&gt;
-&lt;logger name=&quot;com.datastax.driver.core.QueryLogger.SLOW&quot; level=&quot;DEBUG&quot; /&gt;
-
-&lt;root level=&quot;ERROR&quot;&gt;
-    &lt;appender-ref ref=&quot;async&quot; /&gt;
-&lt;/root&gt;
-
-&lt;/configuration&gt;
-</code></pre><p><strong>参考</strong><br><a href="https://datastax.github.io/java-driver/2.1.7/features/logging/" target="_blank" rel="external">https://datastax.github.io/java-driver/2.1.7/features/logging/</a></p>
-
-      
-    </div>
-	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-    </span>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cinxy0wrl0002wguln7ldv75g" class="article-share-link">Delen</a>
-      
-      
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-      <script>window._bd_share_config=
-	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
-	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
-	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
-	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-	  </script>	
-	  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra-java-driver-log" data-title="cassandra java driver log 配置" data-url="undefined"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-cassandra-write" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/28/cassandra-write/" class="article-date">
-  <time datetime="2016-04-28T11:10:25.275Z" itemprop="datePublished">2016-04-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/28/cassandra-write/">cassandra 写数据以及副本放置策略</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
-<ol>
-<li>application 发送请求到server</li>
-<li>根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可</li>
-<li>然后根据插入数据的主键hash value,来将第一份数据写入到对应节点中</li>
-<li>然后根据replicator,write consistency,replication strategy ,来写副本<br>eg.replicator=3,write consistency=2,replication strategy=simple strategy<br>则表示成功写入到2个节点中，application的写操作才算成功。<br>simple strategy 表明副本是放在第一个node 节点环位置的下一个节点</li>
-</ol>
-<p><strong>Note-很重要的一点</strong><br>通过上面描述，发现可以根据hash value 来确定一条数据存放在哪个节点上，然后根据replication的参数设置，我们可以确定数据副本存放在哪个节点上。那么对于read 操作，我们就可以根据条件的hash value 来找到存放数据的第一个节点，然后根据数据副本来找其他replicate 数据。</p>
-<p><strong>上面认识是错误的</strong><br>首先，考虑下如果我们添加node到cluster中，假如数据存放的第一个node hash 受到影响，数据要移除到新加入的node,这个操作很容易实现，那么按照我们上面的认识，其他的副本数据如何处理呢？<br>data的存放的第一个节点变化了，然后再根据replicate stragtegy,已经找不到其他副本了。<br>此外，cassandra 的node是无主机模式，没有主从节点，每份数据都是一样的，但是按照上面的说法，数据的存放的第一个节点重要性又高于其他节点。</p>
-<p>综上，上述认识错误<br><strong>正确的认识</strong><br>cassandra 将数据成功写入后，会有一个map 表，来维护数据存放在哪些节点上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodetool getendpoint keyspace table partitionkey</span><br></pre></td></tr></table></figure>
-<p>这条命令可以查询到数据存放在哪些node上面<br>看了下cassandra的源码，这些数据应该存放在org.apache.cassandra.db:type=StorageService中</p>
-<p><strong>写数据</strong><br><img src="http://img.blog.csdn.net/20160417182913153" alt="这里写图片描述"></p>
-<ol>
-<li>写数据到commit log</li>
-<li>写数据到memtable</li>
-</ol>
-<hr>
-<p> 数据写入到这两个数据结构中，以及replicate 数目达到write consistency数目后，一次写操作就完成了，<br> 写数据是内存操作，所以cassandra 写入速度很快。</p>
-<ol>
-<li>将数据从memtable中冲刷到sstable中<br>sstable中的数据是不可更改的</li>
-</ol>
-
-      
-    </div>
-	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-    </span>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cinxy0wrh0001wgultdycf94n" class="article-share-link">Delen</a>
-      
-      
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-      <script>window._bd_share_config=
-	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
-	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
-	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
-	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-	  </script>	
-	  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-cassandra-write" data-title="cassandra 写数据以及副本放置策略" data-url="undefined"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/27/hello-world/" class="article-date">
-  <time datetime="2016-04-27T14:01:42.830Z" itemprop="datePublished">2016-04-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-	 <span id="busuanzi_container_page_pv">
-      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-    </span>
-    <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cinxy0wrn0003wguldzrrjj5k" class="article-share-link">Delen</a>
-      
-      
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-      <script>window._bd_share_config=
-	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
-	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
-	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
-	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-	  </script>	
-	  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-hello-world" data-title="Hello World" data-url="undefined"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -606,23 +838,23 @@ set level to TRACE to also log query parameters
       <ul>
         
           <li>
-            <a href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
+            <a href="/2016/05/25/cassandra compaction/">cassandra DateTieredCompactionStrategy</a>
           </li>
         
           <li>
-            <a href="/2016/05/05/git/">git 常用命令</a>
+            <a href="/2016/05/21/cassandra in docker/">docker 部署cassandra</a>
           </li>
         
           <li>
-            <a href="/2016/05/05/cassandra-buildin-eclipse/">cassandra develope in eclipse 环境构建</a>
+            <a href="/2016/05/19/javaJMXMBean/">java MBean</a>
           </li>
         
           <li>
-            <a href="/2016/04/29/cassandra-java-driver-log/">cassandra java driver log 配置</a>
+            <a href="/2016/05/18/cassandra-datetieredcompactionstrategy/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2016/04/28/cassandra-write/">cassandra 写数据以及副本放置策略</a>
+            <a href="/2016/05/15/hadoop rpc/">(no title)</a>
           </li>
         
       </ul>
