@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-20T05:53:02.345Z</updated>
+  <updated>2016-05-31T12:59:34.858Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -14,6 +14,98 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://www.webpersonaldeveloper.cn/2016/05/31/cassandra%20monitor/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/05/31/cassandra monitor/</id>
+    <published>2016-05-31T13:00:20.723Z</published>
+    <updated>2016-05-31T12:59:34.858Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;title:cassandra monitor 方案评估&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#摘要#&lt;br&gt;最开始做cassandra monitor 方案的选型时，主要是从cassandra 本身入手，后来发现cassandra运行在&lt;br&gt;JVM上，所有的metrics都是通过JMX 暴露出来。所以又可以使用一些通用的Java Application 的监控方案，作者&lt;br&gt;在调查了很多的实现方案后，最终将范围缩小在graphite,newrelic,opscenter三种解决方案。本文只给出各自的优劣势，具体&lt;br&gt;选用哪种，相信读者自有判断。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;想了解更多cassandra 知识请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;opscenter-VS-graphite-VS-newrelic&quot;&gt;&lt;a href=&quot;#opscenter-VS-graphite-VS-newrelic&quot; class=&quot;headerlink&quot; title=&quot;opscenter VS graphite VS newrelic&quot;&gt;&lt;/a&gt;opscenter VS graphite VS newrelic&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#环境部署&quot;&gt;环境部署&lt;/a&gt;    &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#收集的metrics对比&quot;&gt;收集的metrics对比 &lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#cassandra metrics&quot;&gt;cassandra metrics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#os metrics&quot;&gt;os metrics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#application metrics&quot;&gt;application metrics&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#扩展功能&quot;&gt;扩展功能&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#开发维护成本&quot;&gt;开发维护成本&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#cassandra 版本限制&quot;&gt;cassandra 版本限制&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#总结&quot;&gt;总结&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;环境部署&quot;&gt;&lt;a href=&quot;#环境部署&quot; class=&quot;headerlink&quot; title=&quot;环境部署&quot;&gt;&lt;/a&gt;环境部署&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;opscenter:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;从datastax 下载opscenter,install完了以后，就可以在opscenter 的UI 上面安装cassandra cluster,&lt;br&gt;然后在cluster 上面安装opscenter agent.cassandra 和agent可以在opscenter 的UI上面安装，也可以在各个Node上面安装&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;graphite:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;主要有三部分构成graphite 绘图，Carbon作为缓存，Whisper存储数据。此外通常需要使用&lt;br&gt;grafana 来作为UI显示，因为graphite绘图太丑了，功能也有限。&lt;br&gt;graphite 环境搭建及配置及其复杂，需要安装很多的插件，所以版本适配也很麻烦。不过有了docker以后一切变得简单了。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/kamon-io/docker-grafana-graphite&quot; title=&quot;github&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/kamon-io/docker-grafana-graphite&lt;/a&gt;&lt;br&gt;(可以fork这个repo然后按照你的需求更改)&lt;/p&gt;
+&lt;p&gt;部署好graphite server，还需要在每个cassandra 配置发送&lt;br&gt;新建一个metrics.yaml&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;graphite:
+period: 30
+timeunit: &amp;apos;SECONDS&amp;apos;
+prefix: &amp;apos;cassandra-cluster-prefix.node1&amp;apos;
+hosts:
+ - host: &amp;apos;xxx&amp;apos;
+   port: 2003
+predicate:
+  color: &amp;quot;white&amp;quot;
+  useQualifiedName: true
+  patterns:
+    - &amp;quot;^org.+&amp;quot;
+    - &amp;quot;^jvm.+&amp;quot;
+    - &amp;quot;^java.lang.+&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后在cassandra-env.sh 配置JVM启动项&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;JVM_OPTS=&amp;quot;$JVM_OPTS -Dcassandra.metricsReporterConfigFile=metrics.yaml&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;newrelic:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;只用配置下newrelic 的config，然后run plugin&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/threelegs/newrelic-plugins&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/threelegs/newrelic-plugins&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;warning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;newrelic cassandra 的plugin很多年没有更新了，所以应该支持Cassandra 2.x版本，不支持Cassandra 3.x的版本。&lt;br&gt;不过自己开发也很简单，只是有些metrics 名字，包名换了，可以自己fork下来进行修改。&lt;/p&gt;
+&lt;p&gt;opscenter=newrelic&amp;gt;graphite(即使使用docker，graphite还是部署最复杂的一个)&lt;/p&gt;
+&lt;h2 id=&quot;收集的metrics对比&quot;&gt;&lt;a href=&quot;#收集的metrics对比&quot; class=&quot;headerlink&quot; title=&quot;收集的metrics对比&quot;&gt;&lt;/a&gt;收集的metrics对比&lt;/h2&gt;&lt;h3 id=&quot;cassandra-metrics&quot;&gt;&lt;a href=&quot;#cassandra-metrics&quot; class=&quot;headerlink&quot; title=&quot;cassandra metrics&quot;&gt;&lt;/a&gt;cassandra metrics&lt;/h3&gt;&lt;p&gt;cassandra metrics 主要就是JMX 暴露出来的MBean,包括Read/Write request,latency.&lt;br&gt;还有一些是compaction task等信息。我们通过JConsole 工具就能够查看，不过是JConsole 界面过于丑陋，以及无法保存历史数据，绘制图形也不美观等种种缺点导致我们&lt;br&gt;不去使用它。&lt;/p&gt;
+&lt;p&gt;opscenter=graphite=newrelic cassandra metrics 三种收集方案都可以收集到，没什么差异。&lt;/p&gt;
+&lt;h3 id=&quot;os-metrics&quot;&gt;&lt;a href=&quot;#os-metrics&quot; class=&quot;headerlink&quot; title=&quot;os metrics&quot;&gt;&lt;/a&gt;os metrics&lt;/h3&gt;&lt;p&gt;OS metrics 包括cpu,内存，disk使用情况。&lt;br&gt;opscenter集成在一起，看起来很方便；graphite需要使用第三方插件collectd进行收集；newrelic 同样也可以。&lt;/p&gt;
+&lt;p&gt;opscenter=newrelic&amp;gt;graphite&lt;/p&gt;
+&lt;h3 id=&quot;application-metrics&quot;&gt;&lt;a href=&quot;#application-metrics&quot; class=&quot;headerlink&quot; title=&quot;application metrics&quot;&gt;&lt;/a&gt;application metrics&lt;/h3&gt;&lt;p&gt;cassandra 是数据库服务，但是作为monitor，通常需要查看整体情况。client请求出现问题了，我们可能不仅需要分析&lt;br&gt;数据库，还需要分析application server.当然希望能够将application server 的信息与cassandra整合到同一页面&lt;br&gt;而不是多个监控平台。opscenter 没法做到，graphite 可以，newrelic 可以&lt;/p&gt;
+&lt;p&gt;graphite=newrelic&amp;gt;opscenter&lt;/p&gt;
+&lt;h2 id=&quot;扩展功能&quot;&gt;&lt;a href=&quot;#扩展功能&quot; class=&quot;headerlink&quot; title=&quot;扩展功能&quot;&gt;&lt;/a&gt;扩展功能&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;历史数据保存&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;opscenter、graphite 都是支持参数配置保存多少天的。&lt;br&gt;newrelic 需要钱才可以保存更多天。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;权限管理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;opscenter支持admin对权限进行管理，但是所有的metrics作为一个整体，无法控制让某些用户只看某部分metrics&lt;br&gt;&lt;a href=&quot;https://docs.datastax.com/en/latest-opsc/opsc/configure/opscManageUsers.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://docs.datastax.com/en/latest-opsc/opsc/configure/opscManageUsers.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;graphite 支持organization，不同的organization可以有不同的dashboard.organization中可以添加user，user 角色有四种&lt;br&gt;admin,editor,read only editor,view. 不同的用户在不同的organization中可以有不同的角色。&lt;/p&gt;
+&lt;p&gt;newrelic 支持admin,user,restricted user三种，不同的用户可以看到不同的内容。&lt;/p&gt;
+&lt;h2 id=&quot;开发维护成本&quot;&gt;&lt;a href=&quot;#开发维护成本&quot; class=&quot;headerlink&quot; title=&quot;开发维护成本&quot;&gt;&lt;/a&gt;开发维护成本&lt;/h2&gt;&lt;p&gt;opscenter 不需要开发，维护如果使用datastax 商业版的cassandra,交license费用即可。其他就是opscenter server的费用&lt;/p&gt;
+&lt;p&gt;graphite开源，但是环境部署需要时间和金钱，另外，graphite 有很多的插件构成整个monitor服务，这些插件的维护需要成本。&lt;br&gt;在作者搭建过程就遇到很多的问题。比如多个server的数据聚合问题，读取数据不正确。这些都是需要运营投入到更多的时间的。要是系统&lt;br&gt;不稳定，多投入一个运营，对于公司来说也是一笔不小的投入。&lt;/p&gt;
+&lt;p&gt;newrelic 有免费版，但是功能受限，像上面提到的历史数据保存，只能保存一天。收费版就不便宜了。&lt;br&gt;但是newrelic有个独有的好处，是SaaS服务。当需要监控的数据规模增多的时候，不用自己构建监控集群。&lt;br&gt;在这点上，opscenter，graphite.&lt;/p&gt;
+&lt;p&gt;金钱上&lt;br&gt;graphite&amp;gt;opscenter&amp;gt;newrelic&lt;/p&gt;
+&lt;p&gt;人力上 newrelic&amp;gt;opscenter&amp;gt;graphite&lt;/p&gt;
+&lt;h2 id=&quot;cassandra-版本限制&quot;&gt;&lt;a href=&quot;#cassandra-版本限制&quot; class=&quot;headerlink&quot; title=&quot;cassandra 版本限制&quot;&gt;&lt;/a&gt;cassandra 版本限制&lt;/h2&gt;&lt;p&gt;opscenter最新版本只支持cassandra opensource 2.1,datastax enterprise 4.8,截止目前，cassandra opensource 已经release 3.7了。&lt;br&gt;所以opscenter 版本比较滞后。&lt;br&gt;graphite 是通用版本，可支持最新版本。&lt;br&gt;newrelic 是plugin形式，需要根据cassandra 更新的metrics来更新plugin 发送的metrics。&lt;/p&gt;
+&lt;p&gt;graphite=newrelic&amp;gt;opscenter&lt;/p&gt;
+&lt;p&gt;#总结#&lt;/p&gt;
+&lt;p&gt;无论从监控的metrics收集还是监控工具本身的管理来说，三种方案都能提供对应的解决方案。在其他方面略有差异&lt;/p&gt;
+&lt;p&gt;1.opscenter 很容易部署，另外集成了对cassandra 的常用操作。无需再登录到cassandra server 上，使用命令行来操作了。&lt;br&gt;他本身不仅仅是个monitor工具，还是个cassandra的操作UI界面。opscenter 有个致命的缺点，cassandra版本受限，如果你想使用最新的cassandra&lt;br&gt;无法实现，这点上觉得是致命的缺陷，是因为一个辅助的监控工具，而影响到主要的数据库功能。&lt;/p&gt;
+&lt;p&gt;2.graphite&lt;br&gt;开源是graphite的优势，社区活跃是支撑。有人力能够投入尽快选用此方案。&lt;/p&gt;
+&lt;p&gt;3.newrelic 没有什么技术问题需要去解决，花钱解放生产力，如果监控的内容不是产品的核心，也未尝不是一种好方案&lt;/p&gt;
+&lt;p&gt;以上仅作者意见，只作参考&lt;/p&gt;
+&lt;h1 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://blog.ailms.me/2014/08/17/note-about-graphite-arch.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.ailms.me/2014/08/17/note-about-graphite-arch.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://docs.grafana.org/troubleshooting/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://docs.grafana.org/troubleshooting/&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;title:cassandra monitor 方案评估&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#摘要#&lt;br&gt;最开始做cassandra monitor 方案的选型时，主要是从cassandra 本身入手，后来发现cassandra运行在&lt;br&gt;JVM上，所有的metrics都是通过JMX 暴露出来。所以又可以使用一些通用的Java Application 的监控方案，作者&lt;br&gt;在调查了很多的实现方案后，最终将范围缩小在graphite,newrelic,opscenter三种解决方案。本文只给出各自的优劣势，具体&lt;br&gt;选用哪种，相信读者自有判断。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>redhat7 上安装dummynet</title>
@@ -126,7 +218,7 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
     <link href="http://www.webpersonaldeveloper.cn/2016/05/05/git/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/05/git/</id>
     <published>2016-05-05T08:10:41.853Z</published>
-    <updated>2016-05-07T10:47:45.317Z</updated>
+    <updated>2016-05-27T07:34:54.188Z</updated>
     
     <content type="html">&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;1.apple patch&lt;/p&gt;
@@ -136,6 +228,7 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
 &lt;p&gt;3.查找本地branch&lt;/p&gt;
 &lt;p&gt;git branch &lt;/p&gt;
 &lt;p&gt;4.更换repo远程地址&lt;br&gt; git remote get-url origin //查看远程url&lt;br&gt; git remote set-url origin //设置新的url&lt;br&gt; git push // 提交到新的repo&lt;/p&gt;
+&lt;p&gt;5.eclipse 中&lt;br&gt;git fetch,只是获取更新的head，并没有真正pull到本地&lt;/p&gt;
 </content>
     
     <summary type="html">

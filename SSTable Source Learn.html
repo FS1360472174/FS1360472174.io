@@ -3,18 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>docker 部署cassandra | web personal developer</title>
+  <title>web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题">
+  <meta name="description" content="SSTable
+Descriptor descriptor:包括keyspace,column family 信息
+Setcomponents:SSTables 包括多components,如
+CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.dbSummary.db,TOC.txtSSTable中的数据按照主键排序后存放在连续的B">
 <meta property="og:type" content="website">
-<meta property="og:title" content="docker 部署cassandra">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/cassandra in docker.html">
+<meta property="og:title" content="web personal developer">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/SSTable Source Learn.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题">
-<meta property="og:updated_time" content="2016-05-21T06:55:37.004Z">
+<meta property="og:description" content="SSTable
+Descriptor descriptor:包括keyspace,column family 信息
+Setcomponents:SSTables 包括多components,如
+CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.dbSummary.db,TOC.txtSSTable中的数据按照主键排序后存放在连续的B">
+<meta property="og:updated_time" content="2016-05-27T07:34:10.990Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker 部署cassandra">
-<meta name="twitter:description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题">
+<meta name="twitter:title" content="web personal developer">
+<meta name="twitter:description" content="SSTable
+Descriptor descriptor:包括keyspace,column family 信息
+Setcomponents:SSTables 包括多components,如
+CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.dbSummary.db,TOC.txtSSTable中的数据按照主键排序后存放在连续的B">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -76,48 +85,21 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/cassandra in docker.html" class="article-date">
-  <time datetime="2016-05-25T11:35:30.640Z" itemprop="datePublished">2016-05-25</time>
+    <a href="/SSTable Source Learn.html" class="article-date">
+  <time datetime="2016-05-27T07:34:10.990Z" itemprop="datePublished">2016-05-27</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      docker 部署cassandra
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要<br>讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题</p>
-<a id="more"></a>
-<h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>最简单的方法，利用已有的脚本</p>
-<pre><code>curl -fsSL https://get.docker.com/ | sh
-</code></pre><p>然后启动docker 服务</p>
-<pre><code>service docker start
-</code></pre><p>验证</p>
-<pre><code>docker run hello-world
-</code></pre><h1 id="docker-run-cassandra"><a href="#docker-run-cassandra" class="headerlink" title="docker run cassandra"></a>docker run cassandra</h1><pre><code>docker run --name $CONTAINER_NAME -d -e CASSANDRA-BROADCAST_ADDRESS=xxx.xxx.xxx.xxx
-
- -e CASSANDRA_DC=XX -e CASSANDRA_RACK=XXX cassandra
-</code></pre><p>可以添加的参数有很多，通常下列这些参数需要指定</p>
-<p>CASSANDRA_LISTEN_ADDRESS:监听进来的连接地址，在docker中默认使用的就是container的ip address</p>
-<p>CASSANDRA_BROADCAST_ADDRESS:广播给别的node的地址。</p>
-<p>CASSANDRA_SEEDS：cassandra bootstrap时通信的节点</p>
-<p>CASSANDRA_DC:multi datacenter 时需要指定datacenter 名</p>
-<p>CASSANDRA_RACK：cassandra机架号</p>
-<p>CASSANDRA_ENDPOITN_SNITCH:网络拓扑策略，用来找寻节点，生产环境一般建议使用GossipingPropertyFileSnitch</p>
-<h1 id="multi-datacenter-amp-networking"><a href="#multi-datacenter-amp-networking" class="headerlink" title="multi datacenter &amp; networking"></a>multi datacenter &amp; networking</h1><p>在6 servers 上部署两个cassandra datacenter，每个datacenter 3nodes.</p>
-<pre><code>docker run --name $CONTAINER_NAME -d -e CASSANDRA_BROADCAST_ADDRESS=XXX -e CASSANDRA_DC=DC1 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -p 7000:7000 -p 9042:9042 cassandra
-</code></pre><p>这里需要将CASSANDRA_BROADCAST_ADDRESS 指定为server 的ip</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://hub.docker.com/_/cassandra/" target="_blank" rel="external">https://hub.docker.com/_/cassandra/</a></p>
+        <p>SSTable</p>
+<p>Descriptor descriptor:<br>包括keyspace,column family 信息</p>
+<p>Set<component>components:<br>SSTables 包括多components,如</component></p>
+<p>CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.db<br>Summary.db,TOC.txt<br>SSTable中的数据按照主键排序后存放在连续的Block,<br>index 中存放着每个block最后一行的主键</p>
+<p>CFMetaData:cf 的metadata</p>
 
       
     </div>
@@ -125,7 +107,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html" data-id="ciovgcwri0005lwulz9sqi7jw" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/SSTable Source Learn.html" data-id="ciovgcwr30000lwulkbrla0t8" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -137,7 +119,7 @@ var _hmt = _hmt || [];
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="page-undefined" data-title="docker 部署cassandra" data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html"></div>
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="" data-url="http://www.webpersonaldeveloper.cn/SSTable Source Learn.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

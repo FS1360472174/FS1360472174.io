@@ -5,16 +5,19 @@
   
   <title>web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="-">
+  <meta name="description" content="1.testTimeConversions()时间单位转换
+2.testGetBuckets()测量getBuckets方法getBuckets:将min timestamp 相似的的SSTable File 放在一geBuckets,如果这个间隔很小的时候，不足以作为一个新的bucket，就增加size，或者减少间隔。    //timeUnit 时间间隔，base 最小时间 ,now 当前时间">
 <meta property="og:type" content="website">
 <meta property="og:title" content="web personal developer">
 <meta property="og:url" content="http://www.webpersonaldeveloper.cn/cassandra-datetieredcompactionstrategy.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="-">
-<meta property="og:updated_time" content="2016-05-19T11:12:25.140Z">
+<meta property="og:description" content="1.testTimeConversions()时间单位转换
+2.testGetBuckets()测量getBuckets方法getBuckets:将min timestamp 相似的的SSTable File 放在一geBuckets,如果这个间隔很小的时候，不足以作为一个新的bucket，就增加size，或者减少间隔。    //timeUnit 时间间隔，base 最小时间 ,now 当前时间">
+<meta property="og:updated_time" content="2016-05-27T03:17:18.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web personal developer">
-<meta name="twitter:description" content="-">
+<meta name="twitter:description" content="1.testTimeConversions()时间单位转换
+2.testGetBuckets()测量getBuckets方法getBuckets:将min timestamp 相似的的SSTable File 放在一geBuckets,如果这个间隔很小的时候，不足以作为一个新的bucket，就增加size，或者减少间隔。    //timeUnit 时间间隔，base 最小时间 ,now 当前时间">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -65,7 +68,7 @@ var _hmt = _hmt || [];
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.webpersonaldeveloper.cn"></form>
@@ -77,7 +80,7 @@ var _hmt = _hmt || [];
         <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/cassandra-datetieredcompactionstrategy.html" class="article-date">
-  <time datetime="2016-05-25T11:31:21.229Z" itemprop="datePublished">2016-05-25</time>
+  <time datetime="2016-05-27T03:17:18.226Z" itemprop="datePublished">2016-05-27</time>
 </a>
     
   </div>
@@ -86,7 +89,82 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>-</p>
+        <p>1.testTimeConversions()<br>时间单位转换</p>
+<p>2.testGetBuckets()<br>测量getBuckets方法<br>getBuckets:将min timestamp 相似的的SSTable File 放在一geBuckets,<br>如果这个间隔很小的时候，不足以作为一个新的bucket，就增加size，或者减少间隔。<br>    //timeUnit 时间间隔，base 最小时间 ,now 当前时间<br>    @VisibleForTesting<br>    static <t> List<list<t>&gt; getBuckets(Collection<pair<t, long="">&gt; files, long timeUnit, int base, long now, long maxWindowSize)<br>    {<br>        // Sort files by age. Newest first.<br>        final List<pair<t, long="">&gt; sortedFiles = Lists.newArrayList(files);<br>        Collections.sort(sortedFiles, Collections.reverseOrder(new Comparator<pair<t, long="">&gt;()<br>        {<br>            public int compare(Pair<t, long=""> p1, Pair<t, long=""> p2)<br>            {<br>                return p1.right.compareTo(p2.right);<br>            }<br>        }));</t,></t,></pair<t,></pair<t,></pair<t,></list<t></t></p>
+<pre><code>    List&lt;List&lt;T&gt;&gt; buckets = Lists.newArrayList();
+    //target.size=now
+    //target.divPosition=timeUnit
+    Target target = getInitialTarget(now, timeUnit, maxWindowSize);
+    // API https://google.github.io/guava/releases/19.0/api/docs/com/google/common/collect/PeekingIterator.html#peek()
+    PeekingIterator&lt;Pair&lt;T, Long&gt;&gt; it = Iterators.peekingIterator(sortedFiles.iterator());
+
+    outerLoop:
+    while (it.hasNext())
+    {
+           //target.onTarget(),将target.divPosition与集合中的值/size 进行比较
+           while (!target.onTarget(it.peek().right))
+        {
+            // If the file is too new for the target, skip it.
+            if (target.compareToTimestamp(it.peek().right) &lt; 0)
+            {
+                it.next();
+
+                if (!it.hasNext())
+                    break outerLoop;
+            }
+            else // If the file is too old for the target, switch targets.
+                //将target.size 增大，或者减少divPosition
+                target = target.nextTarget(base);
+        }
+        List&lt;T&gt; bucket = Lists.newArrayList();
+        while (target.onTarget(it.peek().right))
+        {
+            bucket.add(it.next().left);
+
+            if (!it.hasNext())
+                break;
+        }
+        buckets.add(bucket);
+    }
+
+    return buckets;
+}
+</code></pre><p>testPrepBucket()<br>测试static List<sstablereader> newestBucket(List<list<sstablereader>&gt; buckets, int minThreshold, int maxThreshold, long now, long baseTime, long maxWindowSize, SizeTieredCompactionStrategyOptions stcsOptions)<br>确定需要compact的SSTable，不能低于minThreshold 值，不能高于maxThreshold。</list<sstablereader></sstablereader></p>
+<p>testFilterOldSSTables</p>
+<pre><code>//将sstable的max-timestamp 
+@VisibleForTesting
+static Iterable&lt;SSTableReader&gt; filterOldSSTables(List&lt;SSTableReader&gt; sstables, long maxSSTableAge, long now)
+{
+    if (maxSSTableAge == 0)
+        return sstables;
+    final long cutoff = now - maxSSTableAge;
+    return filter(sstables, new Predicate&lt;SSTableReader&gt;()
+    {
+        @Override
+        public boolean apply(SSTableReader sstable)
+        {
+            return sstable.getMaxTimestamp() &gt;= cutoff;
+        }
+    });
+}
+</code></pre><p>思路1.<br>在filterOldSSTables的时候，将SSTable移除掉<br>    @VisibleForTesting<br>    static Iterable<sstablereader> filterOldSSTables(List<sstablereader> sstables, long maxSSTableAge, long now)<br>    {<br>        if (maxSSTableAge == 0)<br>            return sstables;<br>        final long cutoff = now - maxSSTableAge;<br>        return filter(sstables, new Predicate<sstablereader>()<br>        {<br>            @Override<br>            public boolean apply(SSTableReader sstable)<br>            {<br>                return sstable.getMaxTimestamp() &gt;= cutoff;<br>            }<br>        });<br>    }</sstablereader></sstablereader></sstablereader></p>
+<p>2.SSTableReader 类中有</p>
+<pre><code>public void createLinks(String snapshotDirectoryPath)
+{
+    for (Component component : components)
+    {
+        File sourceFile = new File(descriptor.filenameFor(component));
+        if (!sourceFile.exists())
+            continue;
+        File targetLink = new File(snapshotDirectoryPath, sourceFile.getName());
+        FileUtils.createHardLink(sourceFile, targetLink);
+    }
+}
+</code></pre><p>3.FileUtils.createHardLink()中调用了<br>java.nio.file.Files.createLink()方法</p>
+<p>jar 程序来读取SSTable</p>
+<p>1.判断sstable时间戳</p>
+<p>2.移除文件，</p>
+<p>3.创建softlink<br>(创建softlink以后能不能够动态替换)</p>
 
       
     </div>
@@ -94,7 +172,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/cassandra-datetieredcompactionstrategy.html" data-id="ciomsqb610002p4ul6eabubkf" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/cassandra-datetieredcompactionstrategy.html" data-id="ciovgcwru0008lwulvkqhbwjm" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -143,7 +221,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
     </div>
@@ -153,9 +231,13 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/31/cassandra monitor/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
@@ -171,10 +253,6 @@ var _hmt = _hmt || [];
         
           <li>
             <a href="/2016/04/29/cassandra-java-driver-log/">cassandra java driver log 配置</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/28/cassandra-write/">cassandra 写数据以及副本放置策略</a>
           </li>
         
       </ul>
