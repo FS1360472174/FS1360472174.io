@@ -2,9 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/</loc>
+    
+    <lastmod>2016-06-02T12:34:16.809Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
+    
+    <lastmod>2016-06-02T12:33:38.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
+    
+    <lastmod>2016-06-02T12:32:07.217Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
+    
+    <lastmod>2016-06-02T12:30:50.453Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/git/</loc>
+    
+    <lastmod>2016-06-02T12:30:08.042Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/</loc>
+    
+    <lastmod>2016-06-02T12:28:35.462Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/31/cassandra%20monitor/</loc>
     
-    <lastmod>2016-05-31T13:10:31.074Z</lastmod>
+    <lastmod>2016-06-02T09:37:19.559Z</lastmod>
     
   </url>
   
@@ -19,13 +61,6 @@
     <loc>http://www.webpersonaldeveloper.cn/cassandra%20tools.html</loc>
     
     <lastmod>2016-05-31T07:15:06.599Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/git/</loc>
-    
-    <lastmod>2016-05-27T07:34:54.188Z</lastmod>
     
   </url>
   
@@ -58,13 +93,6 @@
   </url>
   
   <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
-    
-    <lastmod>2016-05-25T11:23:23.168Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.webpersonaldeveloper.cn/cassandra%20in%20docker.html</loc>
     
     <lastmod>2016-05-21T06:55:37.004Z</lastmod>
@@ -79,13 +107,6 @@
   </url>
   
   <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/</loc>
-    
-    <lastmod>2016-05-20T05:53:02.345Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.webpersonaldeveloper.cn/hadoop%20rpc.html</loc>
     
     <lastmod>2016-05-15T09:47:57.152Z</lastmod>
@@ -96,27 +117,6 @@
     <loc>http://www.webpersonaldeveloper.cn/hadoop%20environment.html</loc>
     
     <lastmod>2016-05-15T09:40:05.772Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
-    
-    <lastmod>2016-05-01T04:41:53.683Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
-    
-    <lastmod>2016-05-01T04:31:53.025Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/</loc>
-    
-    <lastmod>2016-04-28T10:10:05.248Z</lastmod>
     
   </url>
   

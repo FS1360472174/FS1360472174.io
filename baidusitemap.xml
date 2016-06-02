@@ -3,8 +3,98 @@
 
     
   <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/</loc>
+    <lastmod>2016-06-02T12:34:16.809Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2016-04-27T14:01:42.830Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
+    <lastmod>2016-06-02T12:33:38.333Z</lastmod>
+    <data>
+        <display>
+        <title>cassandra 写数据以及副本放置策略</title>
+        <pubTime>2016-04-28T11:10:25.275Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
+    <lastmod>2016-06-02T12:32:07.217Z</lastmod>
+    <data>
+        <display>
+        <title>cassandra java driver log 配置</title>
+        <pubTime>2016-04-29T09:04:27.756Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
+    <lastmod>2016-06-02T12:30:50.453Z</lastmod>
+    <data>
+        <display>
+        <title>cassandra develop in eclipse 环境构建</title>
+        <pubTime>2016-05-05T08:07:24.235Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/git/</loc>
+    <lastmod>2016-06-02T12:30:08.042Z</lastmod>
+    <data>
+        <display>
+        <title>git 常用命令</title>
+        <pubTime>2016-05-05T08:10:41.853Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/</loc>
+    <lastmod>2016-06-02T12:28:35.462Z</lastmod>
+    <data>
+        <display>
+        <title>redhat7 上安装dummynet</title>
+        <pubTime>2016-05-06T01:44:41.792Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/31/cassandra%20monitor/</loc>
-    <lastmod>2016-05-31T13:10:31.074Z</lastmod>
+    <lastmod>2016-06-02T09:37:19.559Z</lastmod>
     <data>
         <display>
         <title>cassandra monitor 方案评估</title>
@@ -19,101 +109,11 @@
     
     
     
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/git/</loc>
-    <lastmod>2016-05-27T07:34:54.188Z</lastmod>
-    <data>
-        <display>
-        <title>git 常用命令</title>
-        <pubTime>2016-05-05T08:10:41.853Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
     
     
     
     
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
-    <lastmod>2016-05-25T11:23:23.168Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra develop in eclipse 环境构建</title>
-        <pubTime>2016-05-05T08:07:24.235Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
     
-    
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/</loc>
-    <lastmod>2016-05-20T05:53:02.345Z</lastmod>
-    <data>
-        <display>
-        <title>redhat7 上安装dummynet</title>
-        <pubTime>2016-05-06T01:44:41.792Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-    
-    
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
-    <lastmod>2016-05-01T04:41:53.683Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra java driver log 配置</title>
-        <pubTime>2016-04-29T09:04:27.756Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
-    <lastmod>2016-05-01T04:31:53.025Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra 写数据以及副本放置策略</title>
-        <pubTime>2016-04-28T11:10:25.275Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/</loc>
-    <lastmod>2016-04-28T10:10:05.248Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2016-04-27T14:01:42.830Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
 </urlset>

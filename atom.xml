@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-05-31T13:10:31.074Z</updated>
+  <updated>2016-06-02T09:37:19.559Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.webpersonaldeveloper.cn/2016/05/31/cassandra%20monitor/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/31/cassandra monitor/</id>
     <published>2016-05-31T13:00:20.723Z</published>
-    <updated>2016-05-31T13:10:31.074Z</updated>
+    <updated>2016-06-02T09:37:19.559Z</updated>
     
     <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;最开始做cassandra monitor 方案的选型时，主要是从cassandra 本身入手，后来发现cassandra运行在JVM上，所有的metrics都是通过JMX 暴露出来。所以又可以使用一些通用的Java Application 的监控方案，作者&lt;br&gt;在调查了很多的实现方案后，最终将范围缩小在graphite,newrelic,opscenter三种解决方案。本文只给出各自的优劣势，具体选用哪种，相信读者自有判断。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;想了解更多cassandra 知识请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;opscenter-VS-graphite-VS-newrelic&quot;&gt;&lt;a href=&quot;#opscenter-VS-graphite-VS-newrelic&quot; class=&quot;headerlink&quot; title=&quot;opscenter VS graphite VS newrelic&quot;&gt;&lt;/a&gt;opscenter VS graphite VS newrelic&lt;/h1&gt;&lt;ol&gt;
@@ -78,14 +78,14 @@ predicate:
 &lt;p&gt;newrelic 支持admin,user,restricted user三种，不同的用户可以看到不同的内容。&lt;/p&gt;
 &lt;h2 id=&quot;开发维护成本&quot;&gt;&lt;a href=&quot;#开发维护成本&quot; class=&quot;headerlink&quot; title=&quot;开发维护成本&quot;&gt;&lt;/a&gt;开发维护成本&lt;/h2&gt;&lt;p&gt;opscenter 不需要开发，维护如果使用datastax 商业版的cassandra,交license费用即可。其他就是opscenter server的费用&lt;/p&gt;
 &lt;p&gt;graphite开源，但是环境部署需要时间和金钱，另外，graphite 有很多的插件构成整个monitor服务，这些插件的维护需要成本。&lt;br&gt;在作者搭建过程就遇到很多的问题。比如多个server的数据聚合问题，读取数据不正确。这些都是需要运营投入到更多的时间的。要是系统&lt;br&gt;不稳定，多投入一个运营，对于公司来说也是一笔不小的投入。&lt;/p&gt;
-&lt;p&gt;newrelic 有免费版，但是功能受限，像上面提到的历史数据保存，只能保存一天。收费版就不便宜了。&lt;br&gt;但是newrelic有个独有的好处，是SaaS服务。当需要监控的数据规模增多的时候，不用自己构建监控集群。&lt;br&gt;在这点上，opscenter，graphite.&lt;/p&gt;
+&lt;p&gt;newrelic 有免费版，但是功能受限，像上面提到的历史数据保存，只能保存一天。收费版就不便宜了。&lt;br&gt;但是newrelic有个独有的好处，是SaaS服务。当需要监控的数据规模增多的时候，不用自己构建监控集群。&lt;br&gt;在这点上，opscenter，graphite 则需要构建cluster 环境&lt;/p&gt;
 &lt;p&gt;金钱上&lt;br&gt;graphite&amp;gt;opscenter&amp;gt;newrelic&lt;/p&gt;
 &lt;p&gt;人力上 newrelic&amp;gt;opscenter&amp;gt;graphite&lt;/p&gt;
 &lt;h2 id=&quot;cassandra-版本限制&quot;&gt;&lt;a href=&quot;#cassandra-版本限制&quot; class=&quot;headerlink&quot; title=&quot;cassandra 版本限制&quot;&gt;&lt;/a&gt;cassandra 版本限制&lt;/h2&gt;&lt;p&gt;opscenter最新版本只支持cassandra opensource 2.1,datastax enterprise 4.8,截止目前，cassandra opensource 已经release 3.7了。&lt;br&gt;所以opscenter 版本比较滞后。&lt;br&gt;graphite 是通用版本，可支持最新版本。&lt;br&gt;newrelic 是plugin形式，需要根据cassandra 更新的metrics来更新plugin 发送的metrics。&lt;/p&gt;
 &lt;p&gt;graphite=newrelic&amp;gt;opscenter&lt;/p&gt;
 &lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;无论从监控的metrics收集还是监控工具本身的管理来说，三种方案都能提供对应的解决方案。在其他方面略有差异&lt;/p&gt;
 &lt;p&gt;1.opscenter 很容易部署，另外集成了对cassandra 的常用操作。无需再登录到cassandra server 上，使用命令行来操作了。他本身不仅仅是个monitor工具，还是个cassandra的操作UI界面。opscenter 有个致命的缺点，cassandra版本受限，如果你想使用最新的cassandra&lt;br&gt;无法实现，这点上觉得是致命的缺陷，是因为一个辅助的监控工具，而影响到主要的数据库功能。&lt;/p&gt;
-&lt;p&gt;2.graphite&lt;br&gt;开源是graphite的优势，社区活跃是支撑。有人力能够投入尽快选用此方案。&lt;/p&gt;
+&lt;p&gt;2.graphite&lt;br&gt;开源是graphite的优势，社区活跃是支撑。有人力能够投入尽管选用此方案。&lt;/p&gt;
 &lt;p&gt;3.newrelic 没有什么技术问题需要去解决，花钱解放生产力，如果监控的内容不是产品的核心，也未尝不是一种好方案&lt;/p&gt;
 &lt;p&gt;以上仅作者意见，只作参考&lt;/p&gt;
 &lt;h1 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://blog.ailms.me/2014/08/17/note-about-graphite-arch.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.ailms.me/2014/08/17/note-about-graphite-arch.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://docs.grafana.org/troubleshooting/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://docs.grafana.org/troubleshooting/&lt;/a&gt;&lt;/p&gt;
@@ -105,12 +105,12 @@ predicate:
     <link href="http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/</id>
     <published>2016-05-06T01:44:41.792Z</published>
-    <updated>2016-05-20T05:53:02.345Z</updated>
+    <updated>2016-06-02T12:28:35.462Z</updated>
     
-    <content type="html">&lt;p&gt;更多请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;摘要：&quot;&gt;&lt;a href=&quot;#摘要：&quot; class=&quot;headerlink&quot; title=&quot;摘要：&quot;&gt;&lt;/a&gt;摘要：&lt;/h1&gt;&lt;p&gt;在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。&lt;br&gt;linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。&lt;br&gt;linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;提醒&quot;&gt;&lt;a href=&quot;#提醒&quot; class=&quot;headerlink&quot; title=&quot;提醒&quot;&gt;&lt;/a&gt;提醒&lt;/h1&gt;&lt;p&gt;如果你要部署在Redhat6,CentOS6等内核版本比较低的平台，不必参考下面的部署流程。&lt;br&gt;这篇文章就可以满足的你要求&lt;br&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;如果遇到问题，再返回这篇进一步学习&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果遇到问题，再返回这篇进一步学习&lt;/p&gt;
 &lt;h1 id=&quot;dummynet简介&quot;&gt;&lt;a href=&quot;#dummynet简介&quot; class=&quot;headerlink&quot; title=&quot;dummynet简介&quot;&gt;&lt;/a&gt;dummynet简介&lt;/h1&gt;&lt;p&gt;dummynet 是linux下面(现在也可以部署在window下)一款开源的网络带宽控制工具，&lt;br&gt;在网站上线前，可能需要测试带宽对站点的影响。而dummynet就是为此而生。&lt;/p&gt;
 &lt;h1 id=&quot;部署流程&quot;&gt;&lt;a href=&quot;#部署流程&quot; class=&quot;headerlink&quot; title=&quot;部署流程&quot;&gt;&lt;/a&gt;部署流程&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;准备内核版本&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -196,10 +196,7 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
     
     <summary type="html">
     
-      &lt;p&gt;更多请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;摘要：&quot;&gt;&lt;a href=&quot;#摘要：&quot; class=&quot;headerlink&quot; title=&quot;摘要：&quot;&gt;&lt;/a&gt;摘要：&lt;/h1&gt;&lt;p&gt;在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。&lt;br&gt;linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数&lt;/p&gt;
-&lt;h1 id=&quot;提醒&quot;&gt;&lt;a href=&quot;#提醒&quot; class=&quot;headerlink&quot; title=&quot;提醒&quot;&gt;&lt;/a&gt;提醒&lt;/h1&gt;&lt;p&gt;如果你要部署在Redhat6,CentOS6等内核版本比较低的平台，不必参考下面的部署流程。&lt;br&gt;这篇文章就可以满足的你要求&lt;br&gt;&lt;a href=&quot;http://xmodulo.com/how-to-install-dummynet-on-centos.html&quot;&gt;http://xmodulo.com/how-to-install-dummynet-on-centos.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;如果遇到问题，再返回这篇进一步学习&lt;br&gt;
+      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;在redhat 上部署dummynet 需要将ipfw 编译为内核模块，而ipfw需要调用linux kernel的一些函数。&lt;br&gt;linux kernel版本在不断提升，相关的数据结构也在变化。所以可能需要根据你要部署的系统内核版本，来调整参数&lt;/p&gt;
     
     </summary>
     
@@ -211,9 +208,10 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
     <link href="http://www.webpersonaldeveloper.cn/2016/05/05/git/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/05/git/</id>
     <published>2016-05-05T08:10:41.853Z</published>
-    <updated>2016-05-27T07:34:54.188Z</updated>
+    <updated>2016-06-02T12:30:08.042Z</updated>
     
-    <content type="html">&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;介绍常用的git命令&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;1.apple patch&lt;/p&gt;
 &lt;p&gt;git apply xxx.patch&lt;/p&gt;
 &lt;p&gt;2.clone 指定的branch&lt;/p&gt;
@@ -226,11 +224,7 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
     
     <summary type="html">
     
-      &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;1.apple patch&lt;/p&gt;
-&lt;p&gt;git apply xxx.patch&lt;/p&gt;
-&lt;p&gt;2.clone 指定的branch&lt;/p&gt;
-&lt;p&gt;git clone -b &lt;branch&gt; &lt;remote_repo&gt;&lt;/remote_re
+      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;介绍常用的git命令&lt;/p&gt;
     
     </summary>
     
@@ -242,11 +236,11 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
     <link href="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</id>
     <published>2016-05-05T08:07:24.235Z</published>
-    <updated>2016-05-25T11:23:23.168Z</updated>
+    <updated>2016-06-02T12:30:50.453Z</updated>
     
-    <content type="html">&lt;p&gt;#摘要#&lt;br&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;/p&gt;
 &lt;p&gt;更多cassandra,nosql 相关知识请访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;#正文#&lt;br&gt;1.fork cassandra 代码&lt;br&gt;然后clone 到本地（cassandra-trunk 是head 分支)&lt;/p&gt;
+&lt;h1 id=&quot;正文&quot;&gt;&lt;a href=&quot;#正文&quot; class=&quot;headerlink&quot; title=&quot;正文&quot;&gt;&lt;/a&gt;正文&lt;/h1&gt;&lt;p&gt;1.fork cassandra 代码&lt;br&gt;然后clone 到本地（cassandra-trunk 是head 分支)&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git clone https://github.com/FS1360472174/cassandra.git
 cassandra-trunk
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.&lt;code&gt;ant build&lt;/code&gt;&lt;/p&gt;
@@ -271,7 +265,7 @@ cassandra-trunk
     
     <summary type="html">
     
-      &lt;p&gt;#摘要#&lt;br&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;/p&gt;
+      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍如何在eclipse中搭建cassandra环境&lt;/p&gt;
 &lt;p&gt;更多cassandra,nosql 相关知识请访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;br&gt;
     
     </summary>
@@ -284,9 +278,11 @@ cassandra-trunk
     <link href="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</id>
     <published>2016-04-29T09:04:27.756Z</published>
-    <updated>2016-05-01T04:41:53.683Z</updated>
+    <updated>2016-06-02T12:32:07.217Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;enable/disable trace log&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;介绍log配置&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;enable/disable trace log&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;工程中不导入logback-classic.jar,logback-core.jar&lt;/p&gt;
 &lt;p&gt;注意我们同样可以使用slf4j 来解决这个问题&lt;br&gt;&lt;a href=&quot;http://www.slf4j.org/codes.html#StaticLoggerBinder&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.slf4j.org/codes.html#StaticLoggerBinder&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;SLF4J: Failed to load class &amp;quot;org.slf4j.impl.StaticLoggerBinder&amp;quot;.
@@ -348,9 +344,7 @@ set level to TRACE to also log query parameters
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;enable/disable trace log&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;工程中不导入logback-classic.jar,logback-core.jar&lt;/p&gt;
-&lt;p&gt;注意我们同样可以使用slf4j 来解决这个问题&lt;br&gt;&lt;a href=&quot;ht
+      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;介绍log配置&lt;/p&gt;
     
     </summary>
     
@@ -362,9 +356,11 @@ set level to TRACE to also log query parameters
     <link href="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</id>
     <published>2016-04-28T11:10:25.275Z</published>
-    <updated>2016-05-01T04:31:53.025Z</updated>
+    <updated>2016-06-02T12:33:38.333Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;application发送数据到server&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160417175535735&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍cassandra 在单节点以及跨数据中心如何写数据&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;application发送数据到server&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160417175535735&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;application 发送请求到server&lt;/li&gt;
 &lt;li&gt;根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可&lt;/li&gt;
@@ -390,9 +386,7 @@ set level to TRACE to also log query parameters
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;application发送数据到server&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160417175535735&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;application 
+      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍cassandra 在单节点以及跨数据中心如何写数据&lt;/p&gt;
     
     </summary>
     
@@ -404,9 +398,10 @@ set level to TRACE to also log query parameters
     <link href="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/</id>
     <published>2016-04-27T14:01:42.830Z</published>
-    <updated>2016-04-28T10:10:05.248Z</updated>
+    <updated>2016-06-02T12:34:16.809Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -419,7 +414,7 @@ set level to TRACE to also log query parameters
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
     
     </summary>
     

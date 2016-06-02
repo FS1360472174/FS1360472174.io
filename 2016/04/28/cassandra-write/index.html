@@ -5,36 +5,20 @@
   
   <title>cassandra 写数据以及副本放置策略 | web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="application发送数据到server
-
-application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
+  <meta name="description" content="摘要本文主要介绍cassandra 在单节点以及跨数据中心如何写数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cassandra 写数据以及副本放置策略">
 <meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/index.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="application发送数据到server
-
-application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
+<meta property="og:description" content="摘要本文主要介绍cassandra 在单节点以及跨数据中心如何写数据">
 <meta property="og:image" content="http://img.blog.csdn.net/20160417175535735">
 <meta property="og:image" content="http://img.blog.csdn.net/20160417182913153">
-<meta property="og:updated_time" content="2016-05-01T04:31:53.025Z">
+<meta property="og:updated_time" content="2016-06-02T12:33:38.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cassandra 写数据以及副本放置策略">
-<meta name="twitter:description" content="application发送数据到server
-
-application 发送请求到server
-根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可
-然后">
+<meta name="twitter:description" content="摘要本文主要介绍cassandra 在单节点以及跨数据中心如何写数据">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160417175535735">
   
-    <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
   
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
@@ -71,16 +55,10 @@ var _hmt = _hmt || [];
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.webpersonaldeveloper.cn"></form>
@@ -111,7 +89,9 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要介绍cassandra 在单节点以及跨数据中心如何写数据</p>
+<a id="more"></a>
+<p><strong>application发送数据到server</strong><br><img src="http://img.blog.csdn.net/20160417175535735" alt="这里写图片描述"></p>
 <ol>
 <li>application 发送请求到server</li>
 <li>根据设置的load balance 规则从cluster中挑选一个coordinator，一般使用轮询即可。cluster 中的cassandra node 不仅作为数据库的储存节点，同样作为request 请求处理的server。所以保证每个节点处理的request 一样的balance算法即可</li>
@@ -140,7 +120,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="ciovgpi24000d0wul8wkxzy7g" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cioyabzk5000e9kullxc5gv0m" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -175,7 +155,7 @@ var _hmt = _hmt || [];
 <nav id="article-nav">
   
     <a href="/2016/04/29/cassandra-java-driver-log/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           cassandra java driver log 配置
@@ -185,7 +165,7 @@ var _hmt = _hmt || [];
   
   
     <a href="/2016/04/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">Hello World</div>
     </a>
   
@@ -195,61 +175,6 @@ var _hmt = _hmt || [];
 </article>
 
 </section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/05/31/cassandra monitor/">cassandra monitor 方案评估</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/05/git/">git 常用命令</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/05/cassandra-buildin-eclipse/">cassandra develop in eclipse 环境构建</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/29/cassandra-java-driver-log/">cassandra java driver log 配置</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  
-</aside>
         
       </div>
       <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
@@ -267,18 +192,11 @@ var _hmt = _hmt || [];
     </div>
     <nav id="mobile-nav">
   
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
 </nav>
     
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 <script src="/js/script.js"></script>
