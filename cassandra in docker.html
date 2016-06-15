@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>docker 部署cassandra | web personal developer</title>
+  <title>docker部署cassandra | web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题
 文章只发布在CSDN与个人站点,其余站点均属盗版侵权更多cassandra知识请访问 web 个人开发者">
 <meta property="og:type" content="website">
-<meta property="og:title" content="docker 部署cassandra">
+<meta property="og:title" content="docker部署cassandra">
 <meta property="og:url" content="http://www.webpersonaldeveloper.cn/cassandra in docker.html">
 <meta property="og:site_name" content="web personal developer">
 <meta property="og:description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题
 文章只发布在CSDN与个人站点,其余站点均属盗版侵权更多cassandra知识请访问 web 个人开发者">
-<meta property="og:updated_time" content="2016-06-15T11:35:14.542Z">
+<meta property="og:updated_time" content="2016-06-15T11:37:16.925Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker 部署cassandra">
+<meta name="twitter:title" content="docker部署cassandra">
 <meta name="twitter:description" content="摘要本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题
 文章只发布在CSDN与个人站点,其余站点均属盗版侵权更多cassandra知识请访问 web 个人开发者">
   
@@ -68,7 +68,7 @@ var _hmt = _hmt || [];
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.webpersonaldeveloper.cn"></form>
@@ -80,7 +80,7 @@ var _hmt = _hmt || [];
         <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/cassandra in docker.html" class="article-date">
-  <time datetime="2016-06-15T11:35:14.542Z" itemprop="datePublished">2016-06-15</time>
+  <time datetime="2016-06-15T11:37:16.925Z" itemprop="datePublished">2016-06-15</time>
 </a>
     
   </div>
@@ -91,7 +91,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      docker 部署cassandra
+      docker部署cassandra
     </h1>
   
 
@@ -155,7 +155,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html" data-id="cipgsy2a20003y8ul8dt3kemi" class="article-share-link">Delen</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html" data-id="cipgszd030001o4uld0g357zv" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -167,7 +167,7 @@ var _hmt = _hmt || [];
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="page-undefined" data-title="docker 部署cassandra" data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html"></div>
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="docker部署cassandra" data-url="http://www.webpersonaldeveloper.cn/cassandra in docker.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -204,7 +204,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">3</span></li></ul>
     </div>
@@ -214,7 +214,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
