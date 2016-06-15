@@ -101,6 +101,41 @@ predicate:
   </entry>
   
   <entry>
+    <title></title>
+    <link href="http://www.webpersonaldeveloper.cn/2016/05/15/docker%20introduce/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/</id>
+    <published>2016-05-15T01:19:44.944Z</published>
+    <updated>2016-06-15T05:30:21.454Z</updated>
+    
+    <content type="html">&lt;p&gt;docker install:&lt;br&gt;curl -fsSL &lt;a href=&quot;https://get.docker.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://get.docker.com/&lt;/a&gt; | sh&lt;br&gt;service docker start&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;docker ps -a 查看所有的container&lt;/p&gt;
+&lt;p&gt;client 想要访问docker中的子网，需要在client端配置路由&lt;/p&gt;
+&lt;p&gt;route add -net server-ip netmask 255.255.255.0&lt;br&gt;gw client-ip&lt;/p&gt;
+&lt;p&gt;route del -net  &lt;/p&gt;
+&lt;p&gt;iptables 配置NAT 实例&lt;br&gt;//删除所有的配置&lt;br&gt;iptables -t nat -F POSTROUTING&lt;br&gt;iptables -t nat -A POSTROUTING -s 172.17.44.0/24 ! -d 172.17.0.0/16 -j MASQUERADE&lt;/p&gt;
+&lt;p&gt;docker log(cassandra 启动失败日志)&lt;br&gt;docker logs containername&lt;/p&gt;
+&lt;p&gt;docker bash 安装命令&lt;br&gt;apt-get update&lt;br&gt;apt-get install vim&lt;/p&gt;
+&lt;p&gt;docker run –name n1 -d -e CASSANDRA_SEEDS=172.17.42.2 -e CASSANDRA_DC=DC2 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch cassandra  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;attention:&lt;/strong&gt;&lt;br&gt;两个DC 通信需要相互设置路由&lt;br&gt;route add -net 172.17.44.0 netmask 255.255.255.0 gw 10.115.73.27&lt;/p&gt;
+&lt;p&gt;172.17.44.0     toscana3.rtp.ra 255.255.255.0   UG    0      0        0 eno16780032&lt;/p&gt;
+&lt;p&gt;docker rmi imageid&lt;/p&gt;
+&lt;p&gt;docker build －t　cassandra:latest .&lt;br&gt; net (.表示当前目录)&lt;br&gt;&lt;a href=&quot;https://docs.docker.com/engine/reference/commandline/build/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://docs.docker.com/engine/reference/commandline/build/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;清除日志&lt;/p&gt;
+&lt;p&gt;此方法慎用&lt;br&gt;truncate -s 0 /var/lib/docker/containers/&lt;em&gt;/&lt;/em&gt;-json.log&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000002766882&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://segmentfault.com/a/1190000002766882&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;docker install:&lt;br&gt;curl -fsSL &lt;a href=&quot;https://get.docker.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://get.docker.com/&lt;/a&gt; | sh&lt;br&gt;servic
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>redhat7 上安装dummynet</title>
     <link href="http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/</id>
@@ -208,10 +243,14 @@ typedef unsigned int nf_hookfn(const struct nf_hook_ops *ops,
     <link href="http://www.webpersonaldeveloper.cn/2016/05/05/git/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/05/git/</id>
     <published>2016-05-05T08:10:41.853Z</published>
-    <updated>2016-06-02T12:30:08.042Z</updated>
+    <updated>2016-06-03T07:57:48.366Z</updated>
     
     <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;介绍常用的git命令&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;remote repo:&lt;/p&gt;
+&lt;p&gt;personal repo:&lt;/p&gt;
+&lt;p&gt;local repo:这个repo维护了文件修改历史，这样可以&lt;br&gt;进行回退&lt;/p&gt;
+&lt;p&gt;disk content:&lt;/p&gt;
 &lt;p&gt;1.apple patch&lt;/p&gt;
 &lt;p&gt;git apply xxx.patch&lt;/p&gt;
 &lt;p&gt;2.clone 指定的branch&lt;/p&gt;
