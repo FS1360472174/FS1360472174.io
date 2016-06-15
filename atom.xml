@@ -101,16 +101,13 @@ predicate:
   </entry>
   
   <entry>
-    <title></title>
+    <title>利用docker 部署cassandra</title>
     <link href="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/</id>
     <published>2016-05-21T04:13:00.532Z</published>
-    <updated>2016-06-15T11:31:32.462Z</updated>
+    <updated>2016-06-15T11:40:01.284Z</updated>
     
-    <content type="html">&lt;hr&gt;
-&lt;p&gt;title:docker 部署cassandra&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
 &lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;个人站点&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;web 个人开发者&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;安装docker&quot;&gt;&lt;a href=&quot;#安装docker&quot; class=&quot;headerlink&quot; title=&quot;安装docker&quot;&gt;&lt;/a&gt;安装docker&lt;/h1&gt;&lt;p&gt;最简单的方法，利用已有的脚本&lt;/p&gt;
@@ -163,10 +160,7 @@ predicate:
     
     <summary type="html">
     
-      &lt;hr&gt;
-&lt;p&gt;title:docker 部署cassandra&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
+      &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
 &lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;个人站点&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;web 个人开发者&lt;/a&gt;&lt;/p&gt;
     
     </summary>
