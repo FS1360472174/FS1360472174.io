@@ -102,33 +102,72 @@ predicate:
   
   <entry>
     <title></title>
-    <link href="http://www.webpersonaldeveloper.cn/2016/05/15/docker%20introduce/"/>
-    <id>http://www.webpersonaldeveloper.cn/2016/05/15/docker introduce/</id>
-    <published>2016-05-15T01:19:44.944Z</published>
-    <updated>2016-06-15T05:30:21.454Z</updated>
+    <link href="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/</id>
+    <published>2016-05-21T04:13:00.532Z</published>
+    <updated>2016-06-15T11:31:32.462Z</updated>
     
-    <content type="html">&lt;p&gt;docker install:&lt;br&gt;curl -fsSL &lt;a href=&quot;https://get.docker.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://get.docker.com/&lt;/a&gt; | sh&lt;br&gt;service docker start&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.sequenceiq.com/blog/2014/08/12/docker-networking/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;docker ps -a 查看所有的container&lt;/p&gt;
-&lt;p&gt;client 想要访问docker中的子网，需要在client端配置路由&lt;/p&gt;
-&lt;p&gt;route add -net server-ip netmask 255.255.255.0&lt;br&gt;gw client-ip&lt;/p&gt;
-&lt;p&gt;route del -net  &lt;/p&gt;
-&lt;p&gt;iptables 配置NAT 实例&lt;br&gt;//删除所有的配置&lt;br&gt;iptables -t nat -F POSTROUTING&lt;br&gt;iptables -t nat -A POSTROUTING -s 172.17.44.0/24 ! -d 172.17.0.0/16 -j MASQUERADE&lt;/p&gt;
-&lt;p&gt;docker log(cassandra 启动失败日志)&lt;br&gt;docker logs containername&lt;/p&gt;
-&lt;p&gt;docker bash 安装命令&lt;br&gt;apt-get update&lt;br&gt;apt-get install vim&lt;/p&gt;
-&lt;p&gt;docker run –name n1 -d -e CASSANDRA_SEEDS=172.17.42.2 -e CASSANDRA_DC=DC2 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch cassandra  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;attention:&lt;/strong&gt;&lt;br&gt;两个DC 通信需要相互设置路由&lt;br&gt;route add -net 172.17.44.0 netmask 255.255.255.0 gw 10.115.73.27&lt;/p&gt;
-&lt;p&gt;172.17.44.0     toscana3.rtp.ra 255.255.255.0   UG    0      0        0 eno16780032&lt;/p&gt;
-&lt;p&gt;docker rmi imageid&lt;/p&gt;
-&lt;p&gt;docker build －t　cassandra:latest .&lt;br&gt; net (.表示当前目录)&lt;br&gt;&lt;a href=&quot;https://docs.docker.com/engine/reference/commandline/build/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://docs.docker.com/engine/reference/commandline/build/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;清除日志&lt;/p&gt;
-&lt;p&gt;此方法慎用&lt;br&gt;truncate -s 0 /var/lib/docker/containers/&lt;em&gt;/&lt;/em&gt;-json.log&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000002766882&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://segmentfault.com/a/1190000002766882&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;title:docker 部署cassandra&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
+&lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;个人站点&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;web 个人开发者&lt;/a&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;安装docker&quot;&gt;&lt;a href=&quot;#安装docker&quot; class=&quot;headerlink&quot; title=&quot;安装docker&quot;&gt;&lt;/a&gt;安装docker&lt;/h1&gt;&lt;p&gt;最简单的方法，利用已有的脚本&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -fsSL https://get.docker.com/ | sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后启动docker 服务&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;service docker start
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;验证是否安装成功&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;docker-run-cassandra&quot;&gt;&lt;a href=&quot;#docker-run-cassandra&quot; class=&quot;headerlink&quot; title=&quot;docker run cassandra&quot;&gt;&lt;/a&gt;docker run cassandra&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;docker run --name $CONTAINER_NAME -d -e CASSANDRA-BROADCAST_ADDRESS=xxx.xxx.xxx.xxx
+
+ -e CASSANDRA_DC=XX -e CASSANDRA_RACK=XXX cassandra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以添加的参数有很多，通常下列这些参数需要指定&lt;/p&gt;
+&lt;p&gt;CASSANDRA_LISTEN_ADDRESS:监听进来的连接地址，在docker中默认使用的就是container的ip address&lt;/p&gt;
+&lt;p&gt;CASSANDRA_BROADCAST_ADDRESS:广播给别的node的地址。&lt;/p&gt;
+&lt;p&gt;CASSANDRA_SEEDS：cassandra bootstrap时通信的节点&lt;/p&gt;
+&lt;p&gt;CASSANDRA_DC:multi datacenter 时需要指定datacenter 名&lt;/p&gt;
+&lt;p&gt;CASSANDRA_RACK：cassandra机架号&lt;/p&gt;
+&lt;p&gt;CASSANDRA_ENDPOITN_SNITCH:网络拓扑策略，用来找寻节点，生产环境一般建议使用GossipingPropertyFileSnitch&lt;/p&gt;
+&lt;h1 id=&quot;multi-datacenter-amp-networking&quot;&gt;&lt;a href=&quot;#multi-datacenter-amp-networking&quot; class=&quot;headerlink&quot; title=&quot;multi datacenter &amp;amp; networking&quot;&gt;&lt;/a&gt;multi datacenter &amp;amp; networking&lt;/h1&gt;&lt;h2 id=&quot;Case1-一个node上安装一个cassandra-container&quot;&gt;&lt;a href=&quot;#Case1-一个node上安装一个cassandra-container&quot; class=&quot;headerlink&quot; title=&quot;Case1:一个node上安装一个cassandra container&quot;&gt;&lt;/a&gt;Case1:一个node上安装一个cassandra container&lt;/h2&gt;&lt;p&gt;在6 nodes 上部署两个cassandra datacenter，每个datacenter 3nodes.&lt;br&gt;node1:seed node,没有bootstrap&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;docker run --name $CONTAINER_NAME -d 
+-e CASSANDRA_BROADCAST_ADDRESS=XXX -e CASSANDRA_DC=DC1 
+-e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch 
+-p 7000:7000 -p 9042:9042 -p 7199:7199 cassandra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其他node&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;docker run --name $CONTAINER_NAME -d 
+-e CASSANDRA_SEEDS=XXX -e CASSANDRA_BROADCAST_ADDRESS=XXX 
+-e CASSANDRA_DC=DC1 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch 
+-p 7000:7000 -p 9042:9042 -p 7199:7199 cassandra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里需要将CASSANDRA_BROADCAST_ADDRESS 指定为server 的ip&lt;br&gt;注意这边如果需要使用remote jmx连接到node上，因为docker的存在可能会存在问题。cassandra jmx 暴露出来的不是node的public ip,是docker分配的一个内部地址。&lt;br&gt;所以外部无法访问。可以在cassandra-env.sh 中添加jvm参数，这样外部就可以连接到server了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;JVM_OPTS=&amp;quot;$JVM_OPTS -Djava.rmi.server.hostname=&amp;lt;public ip&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;Case2-在一个node上安装多个cassandra-container&quot;&gt;&lt;a href=&quot;#Case2-在一个node上安装多个cassandra-container&quot; class=&quot;headerlink&quot; title=&quot;Case2:在一个node上安装多个cassandra container&quot;&gt;&lt;/a&gt;Case2:在一个node上安装多个cassandra container&lt;/h2&gt;&lt;p&gt;这种情况与Case1 有些不同，最重要的是docker网络问题。如何让各个container 有自己独立的ip，并且能够被外部识别&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;配置docker网桥&lt;br&gt;docker 默认的网桥是docker0&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;ifconfig docker0 192.168.22.1 netmask 255.255.255.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;更新/etc/sysconfig/docker 添加&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;other_args=&amp;quot;--bip&amp;quot;=192.168.22.1/24&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启docker&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;service docker restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;桥接模式下容器之间是可以相互通信的，容器也可以与外部通信&lt;/p&gt;
+&lt;p&gt;2.启动cassandra&lt;br&gt;不需要指定Listen Address,和broadcast address,docker 会自动分配，可以在一个server上启动多个cassandra&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;docker run --name $CONTAINER_NAME -d -e CASSANDRA_DC=DC1 -e CASSANDRA_RACK=RAC1 -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch cassandra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.配置路由&lt;/p&gt;
+&lt;p&gt;client 与docker container:cassandra 通信，与其他server 上的cassandra节点通信。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;route add -net 192.168.22.0 netmask 255.255.255.0 gw public_ip
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://hub.docker.com/_/cassandra/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hub.docker.com/_/cassandra/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://yeasy.gitbooks.io/docker_practice/content/advanced_network/bridge.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://yeasy.gitbooks.io/docker_practice/content/advanced_network/bridge.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.infoq.com/cn/articles/docker-network-and-pipework-open-source-explanation-practice&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;docker install:&lt;br&gt;curl -fsSL &lt;a href=&quot;https://get.docker.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://get.docker.com/&lt;/a&gt; | sh&lt;br&gt;servic
+      &lt;hr&gt;
+&lt;p&gt;title:docker 部署cassandra&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
+&lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;个人站点&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;web 个人开发者&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
