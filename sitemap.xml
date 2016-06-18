@@ -1,135 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/2016/06/17/docker%20issues/</loc>
     
+    <lastmod>2016-06-18T06:10:36.459Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/cassandra-bootstrap.html</loc>
+    
+    <lastmod>2016-06-16T05:28:35.399Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/</loc>
-    <lastmod>2016-06-15T11:40:01.284Z</lastmod>
-    <data>
-        <display>
-        <title>利用docker 部署cassandra</title>
-        <pubTime>2016-05-21T04:13:00.532Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-16T05:18:20.791Z</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/hadoop_mapreduce.html</loc>
     
+    <lastmod>2016-06-16T01:05:43.352Z</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/cassandra%20in%20docker.html</loc>
+    
+    <lastmod>2016-06-15T11:38:23.430Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/docker%20introduce.html</loc>
+    
+    <lastmod>2016-06-15T05:30:21.454Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/05/git/</loc>
-    <lastmod>2016-06-03T07:57:48.366Z</lastmod>
-    <data>
-        <display>
-        <title>git 常用命令</title>
-        <pubTime>2016-05-05T08:10:41.853Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-03T07:57:48.366Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/06/How%20to%20install%20dummynet%20on%20redhat/</loc>
-    <lastmod>2016-06-02T12:43:28.895Z</lastmod>
-    <data>
-        <display>
-        <title>redhat7 上安装dummynet</title>
-        <pubTime>2016-05-06T01:44:41.792Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-02T12:43:28.895Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/</loc>
-    <lastmod>2016-06-02T12:34:16.809Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2016-04-27T14:01:42.830Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-02T12:34:16.809Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/</loc>
-    <lastmod>2016-06-02T12:33:38.333Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra 写数据以及副本放置策略</title>
-        <pubTime>2016-04-28T11:10:25.275Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-02T12:33:38.333Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/</loc>
-    <lastmod>2016-06-02T12:32:07.217Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra java driver log 配置</title>
-        <pubTime>2016-04-29T09:04:27.756Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-02T12:32:07.217Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/</loc>
-    <lastmod>2016-06-02T12:30:50.453Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra develop in eclipse 环境构建</title>
-        <pubTime>2016-05-05T08:07:24.235Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+    <lastmod>2016-06-02T12:30:50.453Z</lastmod>
+    
+  </url>
+  
   <url>
     <loc>http://www.webpersonaldeveloper.cn/2016/05/31/cassandra%20monitor/</loc>
+    
     <lastmod>2016-06-02T09:37:19.559Z</lastmod>
-    <data>
-        <display>
-        <title>cassandra monitor 方案评估</title>
-        <pubTime>2016-05-31T13:00:20.723Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
     
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/cassandra%20monitor.html</loc>
     
+    <lastmod>2016-05-31T12:59:34.858Z</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/cassandra%20tools.html</loc>
     
+    <lastmod>2016-05-31T07:15:06.599Z</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/SSTable%20Source%20Learn.html</loc>
     
+    <lastmod>2016-05-27T07:34:10.990Z</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/cassandra-datetieredcompactionstrategy.html</loc>
     
+    <lastmod>2016-05-27T03:17:18.226Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/cassandra%20compaction.html</loc>
+    
+    <lastmod>2016-05-25T11:33:36.659Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/javaJMXMBean.html</loc>
+    
+    <lastmod>2016-05-20T07:03:35.516Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/hadoop%20rpc.html</loc>
+    
+    <lastmod>2016-05-15T09:47:57.152Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.webpersonaldeveloper.cn/hadoop%20environment.html</loc>
+    
+    <lastmod>2016-05-15T09:40:05.772Z</lastmod>
+    
+  </url>
+  
 </urlset>

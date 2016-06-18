@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>cassandra 常见问题 | web personal developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。
+文章只发布在CSDN 和个人站点
+更多nosql文章可以访问stone fang 个人主页">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cassandra 常见问题">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/2016/06/17/docker issues/index.html">
+<meta property="og:site_name" content="web personal developer">
+<meta property="og:description" content="摘要本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。
+文章只发布在CSDN 和个人站点
+更多nosql文章可以访问stone fang 个人主页">
+<meta property="og:updated_time" content="2016-06-18T06:10:36.459Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cassandra 常见问题">
+<meta name="twitter:description" content="摘要本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。
+文章只发布在CSDN 和个人站点
+更多nosql文章可以访问stone fang 个人主页">
+  
+    <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <script type="text/javascript" src="http://tajs.qq.com/stats?sId=55880411" charset="UTF-8"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?58ec1dc8b5972b468eb3098d1415a338";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">web personal developer</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.webpersonaldeveloper.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-docker issues" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/17/docker issues/" class="article-date">
+  <time datetime="2016-06-17T08:22:17.046Z" itemprop="datePublished">2016-06-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cassandra 常见问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。</p>
+<p>文章只发布在CSDN 和<a href="http://www.webpersonaldeveloper.cn" title="个人站点">个人站点</a></p>
+<p>更多nosql文章可以访问<a href="http://www.webpersonaldeveloper.cn" title="stone fang 个人主页">stone fang 个人主页</a><br><a id="more"></a></p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>Q1:cassandra 如何将一个节点设置为seed node,seed node与其他node有什么区别</p>
+<p>A1:设置seed node很简单，在cassandra.yaml 中 -seeds 选项中设置。可以设置多个node.<br>seed node 是用于新节点加入到集群中，新节点需要通过seed node去发现集群加载的data信息。一旦新节点bootstrap后<br>seed node 就没有作用了。</p>
+<pre><code>seed_provider: 
+- class_name: org.apache.cassandra.locator.SimpleSeedProvider
+  parameters:
+      - seeds: &quot;127.0.0.1&quot;
+</code></pre><p>Q2:cassandra node 新加入到集群中，autobootstrap默认为true，所以可以进行bootstrap，但是加入到集群后，然后重启node，并没有设置<br>autobootstrap为false，为什么这时候cassandra不再做bootstrap呢。</p>
+<p>A2:bootstrap意思是一个新节点加入到集群中，这个新节点加入到集群的partition ring中。负责一部分partition key。其他节点也会更新<br>保存的partition 环信息。而当我们重启节点时，节点会首先自动缓存Gossip状态信息，在重新启动时会自动加载。所以在cassandra部署过程中，你会发现<br>有时候你新启动一个节点，并没有指定seed node，这个node也莫名其妙的加入到了cluster。这是gossip状态没有清除，保存了以前的信息。<br>可以在启动时添加-Dcassandra.load_ring_state=false</p>
+<p>Q3:unable to gossip with seeds.seed 设置有效，也没有防火墙屏蔽。为什么无法gossip，启动失败</p>
+<p>A3:这个可能性很多，首先检查下cassandra.yaml 配置文件的listen_address和broadcast_address.在seed node上<br>面ping下broadcast_address。是否能够ping通。通常在云主机平台上，主机有public ip和private ip.broad_address 需要配置为public ip,listen_address<br>可以配置private ip。</p>
+<p>作者还碰到过一个情况：cassandra 运行在docker中，listen_address是docker分配的私有地址172.17.0.2.<br>但是不知道什么时候配置了route表。将172.17.0.0配置到节点的public ip。导致cassandra无法启动。gossip 不到seeds node.<br>172.17.0.0 应该是路由到docker 的网桥，默认是docker0.将配置错的路由删除掉。就可以了。</p>
+<p>Q4:JMX 访问，设置了remote 方式，7199 端口也打开了，但是仍然访问不了。</p>
+<p>A4:cassandra-env.sh 中配置了JMX访问方式，可以传参。</p>
+<pre><code>if [ &quot;x$LOCAL_JMX&quot; = &quot;x&quot; ]; then
+LOCAL_JMX=yes
+fi
+JMX_PORT=&quot;7199&quot;
+
+if [ &quot;$LOCAL_JMX&quot; = &quot;yes&quot; ]; then
+  JVM_OPTS=&quot;$JVM_OPTS -Dcassandra.jmx.local.port=$JMX_PORT -XX:+DisableExplicitGC&quot;
+else
+  JVM_OPTS=&quot;$JVM_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT&quot;
+  JVM_OPTS=&quot;$JVM_OPTS -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT&quot;
+  JVM_OPTS=&quot;$JVM_OPTS -Dcom.sun.management.jmxremote.ssl=false&quot;
+  JVM_OPTS=&quot;$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=true&quot;
+  JVM_OPTS=&quot;$JVM_OPTS -Dcom.sun.management.jmxremote.password.file=/etc/cassandra/jmxremote.password&quot;
+</code></pre><p>实验环境中可以自行设定了外部访问方式，<br>将jmxremote.authenticate值设为false.就不需要登录名和密码了。通常是使用jconsle 来测试JMX是否可以<br>通过remote连接。在docker环境下7199已经映射了，但是仍然访问不了。cassandra的listen_address是docker分配的<br>private ip.broadcast_address是public ip.jconsole连接的public ip.这时候无法访问，解决办法是在<br>cassandra-env.sh中设置jmx暴露出的ip，像JMX_PORT=”7199”一样</p>
+<pre><code>JVM_OPTS=&quot;$JVM_OPTS -Djava.rmi.server.hostname=&lt;public ip&gt;&quot;
+</code></pre><p>Q5:新节点加入时状态一直都是UJ,而不是UN</p>
+<p>A5:UJ J表示在加入。已经存在的cluster数据很多，将数据从其他节点中移过来需要时间。可以通过nodetool netstats查看下<br>其他节点传输数据到新节点的情况。如果已经没有stream data了，但是状态还是J。可能是sstable在做compaction工作。</p>
+<p>Q6:如何理解在关系型数据库中是首先设计DB Schema，然后考虑查询。但是在cassandra中，需要首先考虑查询场景，然后再去设计DB Schema</p>
+<p>A6:关系型数据库数据是行列式存储，一系列的行和列组成了表，一张表的每一行的列数是固定的。可以根据任意一列来去查询数据。<br>所以查询场景不需要优先考虑。而在cassandra则不是，首先cassandra是根据partition key分布在各个节点上的。节点上的数据又是根据cluster key来分布的。<br>一种查询模式对应的一张表。<br>eg</p>
+<pre><code>create table test (
+name text,
+age int,
+address text,
+PRIMARY KEY(name,address,age)      
+);
+</code></pre><p>这里name是partition key，address,age是cluster key.数据在节点上的存储方式是/address/age 这种分层结构。所以查询的时候只能根据address来查</p>
+<pre><code>select *from test where address=&apos;xx&apos;
+</code></pre><p>而不能根据age,因为age在address的下一层结构中，无法索引到。如果想根据age，必须重新创建一张表。或者使用materialized view.</p>
+<p>综上所述，所以说在cassandra中需要先考虑查询场景，然后再去设计DB Schema.</p>
+
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/06/17/docker issues/" data-id="cipkrpfqn000fp4ulvcpmo899" class="article-share-link">Share</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-docker issues" data-title="cassandra 常见问题" data-url="http://www.webpersonaldeveloper.cn/2016/06/17/docker issues/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/31/cassandra monitor/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">cassandra monitor 方案评估</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/17/docker issues/">cassandra 常见问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/31/cassandra monitor/">cassandra monitor 方案评估</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/21/cassandra in docker/">利用docker 部署cassandra</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/06/How to install dummynet on redhat/">redhat7 上安装dummynet</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/05/git/">git 常用命令</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+      </div>
+      <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+	  <span id="busuanzi_container_site_pv">您是第<span id="busuanzi_value_site_pv"></span>个到达本站的人</span>
+      &copy; 2016 Stone Fang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -3,27 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>web personal developer</title>
+  <title>cassandra bootstrap 过程 | web personal developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SSTable
-Descriptor descriptor:包括keyspace,column family 信息
-Setcomponents:SSTables 包括多components,如
-CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.dbSummary.db,TOC.txtSSTable中的数据按照主键排序后存放在连续的B">
+  <meta name="description" content="1.需要等待集群中所有的node意识到正在进行bootstrapping 的节点。然后再去做另外一个bootstrap.
+新加入的节点首先要收集要加载的信息，然后等待其他节点将相应信息发送过来
+https://wiki.apache.org/cassandra/Operations">
 <meta property="og:type" content="website">
-<meta property="og:title" content="web personal developer">
-<meta property="og:url" content="http://www.webpersonaldeveloper.cn/SSTable Source Learn.html">
+<meta property="og:title" content="cassandra bootstrap 过程">
+<meta property="og:url" content="http://www.webpersonaldeveloper.cn/cassandra-bootstrap.html">
 <meta property="og:site_name" content="web personal developer">
-<meta property="og:description" content="SSTable
-Descriptor descriptor:包括keyspace,column family 信息
-Setcomponents:SSTables 包括多components,如
-CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.dbSummary.db,TOC.txtSSTable中的数据按照主键排序后存放在连续的B">
-<meta property="og:updated_time" content="2016-05-27T07:34:10.990Z">
+<meta property="og:description" content="1.需要等待集群中所有的node意识到正在进行bootstrapping 的节点。然后再去做另外一个bootstrap.
+新加入的节点首先要收集要加载的信息，然后等待其他节点将相应信息发送过来
+https://wiki.apache.org/cassandra/Operations">
+<meta property="og:updated_time" content="2016-06-16T05:28:35.399Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="web personal developer">
-<meta name="twitter:description" content="SSTable
-Descriptor descriptor:包括keyspace,column family 信息
-Setcomponents:SSTables 包括多components,如
-CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.dbSummary.db,TOC.txtSSTable中的数据按照主键排序后存放在连续的B">
+<meta name="twitter:title" content="cassandra bootstrap 过程">
+<meta name="twitter:description" content="1.需要等待集群中所有的node意识到正在进行bootstrapping 的节点。然后再去做另外一个bootstrap.
+新加入的节点首先要收集要加载的信息，然后等待其他节点将相应信息发送过来
+https://wiki.apache.org/cassandra/Operations">
   
     <link rel="alternate" href="/atom.xml" title="web personal developer" type="application/atom+xml">
   
@@ -85,21 +82,29 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/SSTable Source Learn.html" class="article-date">
-  <time datetime="2016-05-27T07:34:10.990Z" itemprop="datePublished">2016-05-27</time>
+    <a href="/cassandra-bootstrap.html" class="article-date">
+  <time datetime="2016-06-16T05:28:35.399Z" itemprop="datePublished">2016-06-16</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cassandra bootstrap 过程
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>SSTable</p>
-<p>Descriptor descriptor:<br>包括keyspace,column family 信息</p>
-<p>Set<component>components:<br>SSTables 包括多components,如</component></p>
-<p>CRC.db,Data.db,Digest.crc32.Filter.db,Index.db,Statistics.db<br>Summary.db,TOC.txt<br>SSTable中的数据按照主键排序后存放在连续的Block,<br>index 中存放着每个block最后一行的主键</p>
-<p>CFMetaData:cf 的metadata</p>
+        <p>1.需要等待集群中所有的node意识到正在进行bootstrapping 的节点。然后再去做另外一个<br>bootstrap.</p>
+<p>新加入的节点首先要收集要加载的信息，然后等待其他节点将相应信息发送过来</p>
+<p><a href="https://wiki.apache.org/cassandra/Operations" target="_blank" rel="external">https://wiki.apache.org/cassandra/Operations</a></p>
 
       
     </div>
@@ -107,7 +112,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/SSTable Source Learn.html" data-id="cipkrpfok0000p4uljin3bax7" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/cassandra-bootstrap.html" data-id="cipkrpfoy0001p4ul7koonryf" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -119,7 +124,7 @@ var _hmt = _hmt || [];
 	  </script>	
 	  <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="page-undefined" data-title="" data-url="http://www.webpersonaldeveloper.cn/SSTable Source Learn.html"></div>
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="cassandra bootstrap 过程" data-url="http://www.webpersonaldeveloper.cn/cassandra-bootstrap.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

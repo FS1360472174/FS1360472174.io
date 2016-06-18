@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.webpersonaldeveloper.cn/"/>
-  <updated>2016-06-02T09:37:19.559Z</updated>
+  <updated>2016-06-18T06:10:36.459Z</updated>
   <id>http://www.webpersonaldeveloper.cn/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>cassandra 常见问题</title>
+    <link href="http://www.webpersonaldeveloper.cn/2016/06/17/docker%20issues/"/>
+    <id>http://www.webpersonaldeveloper.cn/2016/06/17/docker issues/</id>
+    <published>2016-06-17T08:22:17.046Z</published>
+    <updated>2016-06-18T06:10:36.459Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h2&gt;&lt;p&gt;本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。&lt;/p&gt;
+&lt;p&gt;文章只发布在CSDN 和&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;个人站点&quot;&gt;个人站点&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;更多nosql文章可以访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;stone fang 个人主页&quot;&gt;stone fang 个人主页&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;正文&quot;&gt;&lt;a href=&quot;#正文&quot; class=&quot;headerlink&quot; title=&quot;正文&quot;&gt;&lt;/a&gt;正文&lt;/h2&gt;&lt;p&gt;Q1:cassandra 如何将一个节点设置为seed node,seed node与其他node有什么区别&lt;/p&gt;
+&lt;p&gt;A1:设置seed node很简单，在cassandra.yaml 中 -seeds 选项中设置。可以设置多个node.&lt;br&gt;seed node 是用于新节点加入到集群中，新节点需要通过seed node去发现集群加载的data信息。一旦新节点bootstrap后&lt;br&gt;seed node 就没有作用了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;seed_provider: 
+- class_name: org.apache.cassandra.locator.SimpleSeedProvider
+  parameters:
+      - seeds: &amp;quot;127.0.0.1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Q2:cassandra node 新加入到集群中，autobootstrap默认为true，所以可以进行bootstrap，但是加入到集群后，然后重启node，并没有设置&lt;br&gt;autobootstrap为false，为什么这时候cassandra不再做bootstrap呢。&lt;/p&gt;
+&lt;p&gt;A2:bootstrap意思是一个新节点加入到集群中，这个新节点加入到集群的partition ring中。负责一部分partition key。其他节点也会更新&lt;br&gt;保存的partition 环信息。而当我们重启节点时，节点会首先自动缓存Gossip状态信息，在重新启动时会自动加载。所以在cassandra部署过程中，你会发现&lt;br&gt;有时候你新启动一个节点，并没有指定seed node，这个node也莫名其妙的加入到了cluster。这是gossip状态没有清除，保存了以前的信息。&lt;br&gt;可以在启动时添加-Dcassandra.load_ring_state=false&lt;/p&gt;
+&lt;p&gt;Q3:unable to gossip with seeds.seed 设置有效，也没有防火墙屏蔽。为什么无法gossip，启动失败&lt;/p&gt;
+&lt;p&gt;A3:这个可能性很多，首先检查下cassandra.yaml 配置文件的listen_address和broadcast_address.在seed node上&lt;br&gt;面ping下broadcast_address。是否能够ping通。通常在云主机平台上，主机有public ip和private ip.broad_address 需要配置为public ip,listen_address&lt;br&gt;可以配置private ip。&lt;/p&gt;
+&lt;p&gt;作者还碰到过一个情况：cassandra 运行在docker中，listen_address是docker分配的私有地址172.17.0.2.&lt;br&gt;但是不知道什么时候配置了route表。将172.17.0.0配置到节点的public ip。导致cassandra无法启动。gossip 不到seeds node.&lt;br&gt;172.17.0.0 应该是路由到docker 的网桥，默认是docker0.将配置错的路由删除掉。就可以了。&lt;/p&gt;
+&lt;p&gt;Q4:JMX 访问，设置了remote 方式，7199 端口也打开了，但是仍然访问不了。&lt;/p&gt;
+&lt;p&gt;A4:cassandra-env.sh 中配置了JMX访问方式，可以传参。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if [ &amp;quot;x$LOCAL_JMX&amp;quot; = &amp;quot;x&amp;quot; ]; then
+LOCAL_JMX=yes
+fi
+JMX_PORT=&amp;quot;7199&amp;quot;
+
+if [ &amp;quot;$LOCAL_JMX&amp;quot; = &amp;quot;yes&amp;quot; ]; then
+  JVM_OPTS=&amp;quot;$JVM_OPTS -Dcassandra.jmx.local.port=$JMX_PORT -XX:+DisableExplicitGC&amp;quot;
+else
+  JVM_OPTS=&amp;quot;$JVM_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT&amp;quot;
+  JVM_OPTS=&amp;quot;$JVM_OPTS -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT&amp;quot;
+  JVM_OPTS=&amp;quot;$JVM_OPTS -Dcom.sun.management.jmxremote.ssl=false&amp;quot;
+  JVM_OPTS=&amp;quot;$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=true&amp;quot;
+  JVM_OPTS=&amp;quot;$JVM_OPTS -Dcom.sun.management.jmxremote.password.file=/etc/cassandra/jmxremote.password&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;实验环境中可以自行设定了外部访问方式，&lt;br&gt;将jmxremote.authenticate值设为false.就不需要登录名和密码了。通常是使用jconsle 来测试JMX是否可以&lt;br&gt;通过remote连接。在docker环境下7199已经映射了，但是仍然访问不了。cassandra的listen_address是docker分配的&lt;br&gt;private ip.broadcast_address是public ip.jconsole连接的public ip.这时候无法访问，解决办法是在&lt;br&gt;cassandra-env.sh中设置jmx暴露出的ip，像JMX_PORT=”7199”一样&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;JVM_OPTS=&amp;quot;$JVM_OPTS -Djava.rmi.server.hostname=&amp;lt;public ip&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Q5:新节点加入时状态一直都是UJ,而不是UN&lt;/p&gt;
+&lt;p&gt;A5:UJ J表示在加入。已经存在的cluster数据很多，将数据从其他节点中移过来需要时间。可以通过nodetool netstats查看下&lt;br&gt;其他节点传输数据到新节点的情况。如果已经没有stream data了，但是状态还是J。可能是sstable在做compaction工作。&lt;/p&gt;
+&lt;p&gt;Q6:如何理解在关系型数据库中是首先设计DB Schema，然后考虑查询。但是在cassandra中，需要首先考虑查询场景，然后再去设计DB Schema&lt;/p&gt;
+&lt;p&gt;A6:关系型数据库数据是行列式存储，一系列的行和列组成了表，一张表的每一行的列数是固定的。可以根据任意一列来去查询数据。&lt;br&gt;所以查询场景不需要优先考虑。而在cassandra则不是，首先cassandra是根据partition key分布在各个节点上的。节点上的数据又是根据cluster key来分布的。&lt;br&gt;一种查询模式对应的一张表。&lt;br&gt;eg&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;create table test (
+name text,
+age int,
+address text,
+PRIMARY KEY(name,address,age)      
+);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里name是partition key，address,age是cluster key.数据在节点上的存储方式是/address/age 这种分层结构。所以查询的时候只能根据address来查&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;select *from test where address=&amp;apos;xx&amp;apos;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;而不能根据age,因为age在address的下一层结构中，无法索引到。如果想根据age，必须重新创建一张表。或者使用materialized view.&lt;/p&gt;
+&lt;p&gt;综上所述，所以说在cassandra中需要先考虑查询场景，然后再去设计DB Schema.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h2&gt;&lt;p&gt;本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。&lt;/p&gt;
+&lt;p&gt;文章只发布在CSDN 和&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;个人站点&quot;&gt;个人站点&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;更多nosql文章可以访问&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;stone fang 个人主页&quot;&gt;stone fang 个人主页&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>cassandra monitor 方案评估</title>
@@ -105,10 +170,10 @@ predicate:
     <link href="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra%20in%20docker/"/>
     <id>http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/</id>
     <published>2016-05-21T04:13:00.532Z</published>
-    <updated>2016-06-15T11:40:01.284Z</updated>
+    <updated>2016-06-16T05:18:20.791Z</updated>
     
     <content type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
-&lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;个人站点&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;web 个人开发者&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;stone Fang个人站点&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;web 个人开发者&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;安装docker&quot;&gt;&lt;a href=&quot;#安装docker&quot; class=&quot;headerlink&quot; title=&quot;安装docker&quot;&gt;&lt;/a&gt;安装docker&lt;/h1&gt;&lt;p&gt;最简单的方法，利用已有的脚本&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;curl -fsSL https://get.docker.com/ | sh
@@ -161,7 +226,7 @@ predicate:
     <summary type="html">
     
       &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要&lt;br&gt;讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题&lt;/p&gt;
-&lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;个人站点&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;www.webpersonaldeveloper.cn&quot;&gt;web 个人开发者&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文章只发布在CSDN与&lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;stone Fang个人站点&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;,其余站点均属盗版侵权&lt;br&gt;更多cassandra知识请访问 &lt;a href=&quot;http://www.webpersonaldeveloper.cn&quot; title=&quot;web 个人开发者&quot;&gt;http://www.webpersonaldeveloper.cn&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     

@@ -75,6 +75,77 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
+    <article id="post-docker issues" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/17/docker issues/" class="article-date">
+  <time datetime="2016-06-17T08:22:17.046Z" itemprop="datePublished">2016-06-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/17/docker issues/">cassandra 常见问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文主要介绍在部署cassandra集群以及使用cassandra过程中遇到的一些问题。</p>
+<p>文章只发布在CSDN 和<a href="http://www.webpersonaldeveloper.cn" title="个人站点">个人站点</a></p>
+<p>更多nosql文章可以访问<a href="http://www.webpersonaldeveloper.cn" title="stone fang 个人主页">stone fang 个人主页</a><br>
+        
+          <p class="article-more-link">
+            <a href="/2016/06/17/docker issues/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+	 <span id="busuanzi_container_page_pv">
+      &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <footer class="article-footer">
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/06/17/docker issues/" data-id="cipkrpfqn000fp4ulvcpmo899" class="article-share-link">Share</a>
+      
+      
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+      <script>window._bd_share_config=
+	  {"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},
+	  "share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},
+	  "selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+	  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	  </script>	
+	  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-docker issues" data-title="cassandra 常见问题" data-url="undefined"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'webpersonaldeveloper'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-cassandra monitor" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/31/cassandra monitor/" class="article-date">
@@ -109,7 +180,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/31/cassandra monitor/" data-id="cipgt2qvw000d3wuluqrwk0dj" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/31/cassandra monitor/" data-id="cipkrpfqo000gp4ul1yu6nf53" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -167,7 +238,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文主要介绍在redhat7 平台，利用docker 部署cassandra 集群，除了介绍基本的部署步骤，另外主要<br>讨论类似于cassandra 这种分布式集群系统部署 docker如何进行网络配置的问题</p>
-<p>文章只发布在CSDN与<a href="www.webpersonaldeveloper.cn">个人站点</a>,其余站点均属盗版侵权<br>更多cassandra知识请访问 <a href="www.webpersonaldeveloper.cn">web 个人开发者</a></p>
+<p>文章只发布在CSDN与<a href="http://www.webpersonaldeveloper.cn" title="stone Fang个人站点">http://www.webpersonaldeveloper.cn</a>,其余站点均属盗版侵权<br>更多cassandra知识请访问 <a href="http://www.webpersonaldeveloper.cn" title="web 个人开发者">http://www.webpersonaldeveloper.cn</a></p>
         
           <p class="article-more-link">
             <a href="/2016/05/21/cassandra in docker/#more">Read More</a>
@@ -179,7 +250,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/" data-id="cipgt2qvk000c3wul9eo6ie0f" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/21/cassandra in docker/" data-id="cipkrpfqa000bp4ul4i0lyvf2" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -248,7 +319,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cipgt2qvd000b3wul9asljm1a" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/06/How to install dummynet on redhat/" data-id="cipkrpfql000ep4ulygepk61l" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -317,7 +388,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cipgt2qvz000g3wulxt2jtlhi" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/git/" data-id="cipkrpfqr000ip4ulolxudewf" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -387,7 +458,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cipgt2qvy000f3wullflbb4sz" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/05/05/cassandra-buildin-eclipse/" data-id="cipkrpfqj000dp4ulrhezodq2" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -456,7 +527,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cipgt2qvx000e3wulvu0iec77" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/29/cassandra-java-driver-log/" data-id="cipkrpfqq000hp4ull188n788" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -525,7 +596,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cipgt2qw0000h3wul8c2ik6qs" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/28/cassandra-write/" data-id="cipkrpfr6000kp4ulf3jp2y4e" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -594,7 +665,7 @@ var _hmt = _hmt || [];
       &nbsp;&nbsp;本文总阅读量<span id="busuanzi_value_page_pv"></span>次
     </span>
     <footer class="article-footer">
-      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cipgt2qw1000i3wulat9zjbwl" class="article-share-link">Share</a>
+      <a data-url="http://www.webpersonaldeveloper.cn/2016/04/27/hello-world/" data-id="cipkrpfr3000jp4ul8tclvzep" class="article-share-link">Share</a>
       
       
 	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
@@ -646,7 +717,7 @@ var _hmt = _hmt || [];
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -657,6 +728,10 @@ var _hmt = _hmt || [];
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/06/17/docker issues/">cassandra 常见问题</a>
+          </li>
         
           <li>
             <a href="/2016/05/31/cassandra monitor/">cassandra monitor 方案评估</a>
@@ -672,10 +747,6 @@ var _hmt = _hmt || [];
         
           <li>
             <a href="/2016/05/05/git/">git 常用命令</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/05/cassandra-buildin-eclipse/">cassandra develop in eclipse 环境构建</a>
           </li>
         
       </ul>
