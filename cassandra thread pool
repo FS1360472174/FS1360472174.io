@@ -1,0 +1,20 @@
+---
+
+cassandra 线程技术介绍
+
+---
+
+### **摘要** ###
+本文主要介绍cassandra线程技术，cassandra的实现是基于java的，所以线程技术使用的也是jdk包提供的线程类。
+cassandra 是分布式数据库，整个并发架构是基于阶段事件驱动架构(staged envent-driven architecture)它能够利用
+queue将复杂的事件驱动分解为各个阶段。
+
+### **java并发** ###
+
+
+### **SEDA架构** ###
+
+### **Cassandra线程技术** ###
+
+### *参考*###
+[http://blog.csdn.net/lxlzhn/article/details/8163380](http://blog.csdn.net/lxlzhn/article/details/8163380)
